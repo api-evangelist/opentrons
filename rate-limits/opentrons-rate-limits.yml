@@ -1,0 +1,40 @@
+name: Opentrons Rate Limits
+description: The Opentrons HTTP API runs locally on the robot hardware and is not a cloud-hosted API service. As such, there are no published rate limits enforced by Opentrons. Performance is constrained by the robot's onboard compute resources and the physical execution speed of liquid handling operations rather than by API throttling policies.
+url: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+rateLimits:
+  - name: HTTP API - No Published Rate Limits
+    description: The Opentrons HTTP API is served directly from the robot's onboard computer over the local network on port 31950. Opentrons does not publish formal rate limits. The API is designed for single-client use (the Opentrons App or a custom integration) and is constrained by the robot's hardware capabilities.
+    type: local-network
+    enforced: false
+    notes:
+      - No cloud-based rate limiting applies
+      - The robot processes one run at a time (serial execution)
+      - Paginated endpoints (e.g., GET /runs/{run_id}/commands) default to 20 results per page
+      - Concurrent protocol execution is not supported; only one run can be active at a time
+  - name: Protocol Execution - Physical Constraints
+    description: Protocol execution speed is bounded by the physical movement capabilities of the Opentrons robot, not software rate limits. Pipette operations, gripper movements, and module interactions follow the robot's mechanical constraints.
+    type: hardware
+    enforced: true
+    notes:
+      - Only one protocol run can execute at a time
+      - Commands queue sequentially during protocol execution
+      - Atomic commands in setup mode execute immediately
+      - Atomic commands in protocol mode queue for sequential execution
+  - name: API Versioning
+    description: The HTTP API uses integer versioning via the Opentrons-Version request header. Current version is v3. Clients should specify the version header to ensure compatibility.
+    type: versioning
+    currentVersion: '3'
+    header: Opentrons-Version
+    notes:
+      - Use Opentrons-Version header in all requests
+      - Set to '*' to use the latest available version
+      - Version is independently maintained from robot software version
+      - Backward compatibility is maintained per version
+apiAccess:
+  type: local-network
+  authRequired: false
+  port: 31950
+  protocol: HTTP
+  format: JSON
+  openAPISpec: http://{ROBOT_IP}:31950/openapi.json
+  interactiveDocs: http://{ROBOT_IP}:31950/redoc

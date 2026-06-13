@@ -1,0 +1,107 @@
+aid: opentrons
+name: Opentrons
+description: Opentrons is a lab automation platform providing a REST HTTP API and Python Protocol API for controlling liquid handling robots such as the Opentrons Flex and OT-2. Developers can programmatically manage protocols, control pipettes, run liquid handling workflows, manage labware, and integrate biology lab automation into their applications. The HTTP API operates on-robot over a local network and exposes OpenAPI-defined endpoints for protocol upload, run management, atomic liquid handling commands, and hardware control.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/opentrons/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+tags:
+  - Lab Automation
+  - Liquid Handling
+  - Robotics
+  - Biology
+  - Life Sciences
+  - Protocol Management
+  - Hardware Control
+  - Open Source
+apis:
+  - name: Opentrons HTTP API
+    description: The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+    baseURL: http://{ROBOT_IP}:31950
+    tags:
+      - Liquid Handling
+      - Protocol Management
+      - Robot Control
+      - Run Management
+      - Hardware Control
+    properties:
+      - type: Documentation
+        url: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+      - type: OpenAPI
+        url: http://{ROBOT_IP}:31950/openapi.json
+      - type: Redoc
+        url: http://{ROBOT_IP}:31950/redoc
+      - type: GitHubRepository
+        url: https://github.com/Opentrons/opentrons
+      - type: IntegrationTools
+        url: https://github.com/Opentrons/opentrons-integration-tools
+    contact:
+      - FN: Opentrons Support
+        url: https://support.opentrons.com/
+        email: support@opentrons.com
+  - name: Opentrons Python Protocol API
+    description: The Opentrons Python Protocol API is an open-source Python framework for writing automated biology lab protocols that run on Opentrons Flex and OT-2 robots. It provides programmatic control over pipettes, labware, deck configuration, hardware modules (thermocyclers, heater-shakers, temperature modules, magnetic modules, absorbance readers), and supports dynamic decision-making and custom integrations. Protocols are executed by the robot server and can be controlled via the HTTP API or Opentrons App.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.opentrons.com/v2/
+    baseURL: https://docs.opentrons.com
+    tags:
+      - Python
+      - Protocol
+      - Liquid Handling
+      - Lab Automation
+      - Hardware Modules
+      - Open Source
+    properties:
+      - type: Documentation
+        url: https://docs.opentrons.com/v2/
+      - type: GettingStarted
+        url: https://docs.opentrons.com/v2/new_quickstart.html
+      - type: APIReference
+        url: https://docs.opentrons.com/v2/new_protocol_api.html
+      - type: ProtocolExamples
+        url: https://docs.opentrons.com/v2/new_examples.html
+      - type: GitHubRepository
+        url: https://github.com/Opentrons/opentrons
+      - type: PyPI
+        url: https://pypi.org/project/opentrons/
+    contact:
+      - FN: Opentrons Support
+        url: https://support.opentrons.com/
+        email: support@opentrons.com
+common:
+  - type: Website
+    url: https://opentrons.com/
+  - type: Documentation
+    url: https://docs.opentrons.com/
+  - type: GettingStarted
+    url: https://opentrons.com/pythonapi
+  - type: News
+    url: https://opentrons.com/about/news
+  - type: GitHubOrganization
+    url: https://github.com/opentrons
+  - type: Support
+    url: https://support.opentrons.com/
+  - type: Contact
+    url: https://opentrons.com/contact-support
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/opentrons-labworks-inc.
+  - type: X
+    url: https://twitter.com/opentrons
+  - type: ProtocolLibrary
+    url: https://protocols.opentrons.com/
+  - type: LabwareLibrary
+    url: https://labware.opentrons.com/
+  - type: ProtocolDesigner
+    url: https://designer.opentrons.com/
+  - type: Plans
+    url: plans/opentrons-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/opentrons-rate-limits.yml
+  - type: FinOps
+    url: finops/opentrons-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

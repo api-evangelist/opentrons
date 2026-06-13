@@ -1,0 +1,60 @@
+name: Opentrons Plans and Pricing
+description: Opentrons follows a hardware-centric business model. The HTTP API and Python Protocol API are open-source and freely available to all robot owners. There are no software subscription tiers for API access. Revenue is generated through robot hardware sales, accessories, and optional custom protocol development services.
+url: https://opentrons.com/robots/flex
+plans:
+  - name: Opentrons Flex Robot
+    description: The next-generation Opentrons liquid handling robot. Includes full access to the HTTP API (port 31950), Python Protocol API, Protocol Designer, and Protocol Library at no additional software cost. Supports 1-channel, 8-channel, and 96-channel interchangeable pipettes, modular gripper, and a wide range of hardware modules.
+    url: https://opentrons.com/robots/flex
+    price: Starting at $26,400
+    pricingModel: one-time hardware purchase
+    features:
+      - HTTP REST API access (on-robot, port 31950)
+      - Python Protocol API (open source)
+      - Protocol Designer (no-code tool, free)
+      - Protocol Library (pre-built workflows, free)
+      - Labware Library access
+      - Touchscreen interface (7-inch display)
+      - 12 main deck slots + 4 staging slots
+      - Gripper for automated plate movement
+      - Modular pipette system (1ch, 8ch, 96ch)
+      - Hardware module support (thermocycler, heater-shaker, temperature module, magnetic module, absorbance reader)
+      - Open-source firmware and software
+    softwareCosts: None - all APIs and software tools are free with robot purchase
+  - name: Opentrons OT-2 Robot
+    description: The Opentrons OT-2 is the earlier-generation liquid handling robot. Includes full access to the HTTP API and Python Protocol API. The HTTP API was introduced in software version 5.0.
+    url: https://opentrons.com/robots/ot-2
+    price: Contact for pricing
+    pricingModel: one-time hardware purchase
+    features:
+      - HTTP REST API access (on-robot, port 31950)
+      - Python Protocol API (open source)
+      - Protocol Designer (no-code tool, free)
+      - Protocol Library (pre-built workflows, free)
+      - 8 deck slots
+      - Hardware module support
+      - Open-source firmware and software
+    softwareCosts: None - all APIs and software tools are free with robot purchase
+  - name: Flex NGS Workstation
+    description: Pre-configured Opentrons Flex workstation bundle optimized for next-generation sequencing workflows.
+    url: https://opentrons.com/robots/flex
+    price: Starting at $55,100
+    pricingModel: one-time hardware purchase
+    features:
+      - All Opentrons Flex features
+      - Pre-configured for NGS workflows
+      - Bundled hardware modules and consumables
+      - Full HTTP API and Python API access
+  - name: Custom Protocol Development
+    description: Optional paid service for custom protocol development by the Opentrons team. Available through the Opentrons shop.
+    url: https://shop.opentrons.com/
+    price: Contact for pricing
+    pricingModel: services engagement
+    features:
+      - Custom Python protocol development
+      - Application-specific automation design
+      - Integration consulting
+notes:
+  - The Opentrons API is open-source (Apache 2.0 license) and freely usable
+  - No API keys or subscriptions required for HTTP API access
+  - The robot must be on the same network as the client to access the HTTP API
+  - Software updates are provided free of charge via the Opentrons App

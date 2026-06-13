@@ -1,0 +1,57 @@
+name: Opentrons FinOps
+description: Opentrons operates a hardware-centric revenue model. All API access — HTTP and Python Protocol API — is free and open-source, bundled with robot hardware. There are no recurring API costs, usage-based billing, or subscription fees for developers. Financial considerations are limited to upfront hardware investment and optional services.
+url: https://opentrons.com/
+model: hardware-bundled-open-source
+costStructure:
+  apiCosts: none
+  softwareCosts: none
+  subscriptionCosts: none
+  usageBasedCosts: none
+capitalExpenses:
+  - name: Opentrons Flex Robot
+    description: Primary hardware platform providing access to the full HTTP API and Python Protocol API ecosystem.
+    cost: Starting at $26,400 USD
+    type: one-time capital expenditure
+    url: https://opentrons.com/robots/flex
+  - name: Flex NGS Workstation Bundle
+    description: Pre-configured Flex system for next-generation sequencing workflows.
+    cost: Starting at $55,100 USD
+    type: one-time capital expenditure
+    url: https://opentrons.com/robots/flex
+  - name: Opentrons OT-2 Robot
+    description: Earlier generation robot with full HTTP and Python API support.
+    cost: Contact for pricing
+    type: one-time capital expenditure
+    url: https://opentrons.com/robots/ot-2
+  - name: Hardware Modules
+    description: Add-on modules including thermocycler, heater-shaker, temperature module, magnetic module, and absorbance reader.
+    cost: Varies by module
+    type: one-time capital expenditure
+    url: https://opentrons.com/products/
+  - name: Pipettes and Consumables
+    description: Interchangeable pipettes (1-channel, 8-channel, 96-channel), tip racks, labware, and reagents.
+    cost: Varies
+    type: recurring operational expenditure
+    url: https://shop.opentrons.com/
+operationalExpenses:
+  - name: Custom Protocol Development Services
+    description: Optional paid service for custom protocol development by Opentrons engineers or certified partners.
+    cost: Contact for pricing
+    type: optional services
+    url: https://shop.opentrons.com/
+  - name: Support Plans
+    description: Opentrons provides standard support via the Help Center at no additional cost. Extended or enterprise support options may be available through sales.
+    cost: Standard support included; enterprise pricing on request
+    type: optional services
+    url: https://support.opentrons.com/
+savings:
+  - description: No API subscription or usage fees reduces total cost of ownership for high-volume users
+  - description: Open-source codebase allows self-hosting, custom forks, and community-contributed protocols at no cost
+  - description: Protocol Library provides pre-built, validated workflows reducing protocol development time and cost
+  - description: Protocol Designer no-code tool reduces dependency on Python developers for routine automation
+budgetingGuidance:
+  - Budget primarily for hardware capital expenditure (robot, modules, accessories)
+  - Software and API costs are zero — no line item needed for API access
+  - Factor in consumables (tips, reagents, labware) as ongoing operational costs
+  - Consider optional custom protocol development as a professional services budget line
+  - Network infrastructure (local network/WiFi) must support robot connectivity but no cloud infrastructure is required
