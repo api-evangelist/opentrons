@@ -1,0 +1,108 @@
+{
+  "title": "Create a Run from an Uploaded Protocol",
+  "description": "Example request and response for creating a new protocol run on an Opentrons robot. The protocol must already be uploaded. Optionally include labware offsets and runtime parameter values.",
+  "request": {
+    "method": "POST",
+    "url": "http://{ROBOT_IP}:31950/runs",
+    "headers": {
+      "Opentrons-Version": "*",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "data": {
+        "protocolId": "protocol-abc123",
+        "labwareOffsets": [
+          {
+            "definitionUri": "opentrons/opentrons_96_tiprack_1000ul/1",
+            "location": {
+              "slotName": "1"
+            },
+            "vector": {
+              "x": 0.1,
+              "y": -0.2,
+              "z": 0.0
+            }
+          }
+        ],
+        "runTimeParameterValues": {
+          "num_samples": 24,
+          "aspirate_volume": 100.0,
+          "use_module": true
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 201,
+    "headers": {
+      "Content-Type": "application/json",
+      "Opentrons-Version": "4",
+      "Opentrons-Min-Version": "2"
+    },
+    "body": {
+      "data": {
+        "id": "run-xyz789",
+        "createdAt": "2026-06-13T14:30:00.000Z",
+        "status": "idle",
+        "current": true,
+        "protocolId": "protocol-abc123",
+        "actions": [],
+        "errors": [],
+        "pipettes": [],
+        "labware": [],
+        "modules": [],
+        "liquids": [],
+        "runTimeParameters": [
+          {
+            "variableName": "num_samples",
+            "displayName": "Number of Samples",
+            "value": 24,
+            "type": "int"
+          },
+          {
+            "variableName": "aspirate_volume",
+            "displayName": "Aspirate Volume (uL)",
+            "value": 100.0,
+            "type": "float"
+          },
+          {
+            "variableName": "use_module",
+            "displayName": "Use Temperature Module",
+            "value": true,
+            "type": "bool"
+          }
+        ],
+        "labwareOffsets": [
+          {
+            "id": "offset-001",
+            "createdAt": "2026-06-13T14:30:00.000Z",
+            "definitionUri": "opentrons/opentrons_96_tiprack_1000ul/1",
+            "location": {
+              "slotName": "1"
+            },
+            "vector": {
+              "x": 0.1,
+              "y": -0.2,
+              "z": 0.0
+            }
+          }
+        ]
+      },
+      "links": {
+        "self": {
+          "href": "/runs/run-xyz789"
+        },
+        "commands": {
+          "href": "/runs/run-xyz789/commands",
+          "meta": {
+            "cursor": 0,
+            "totalLength": 0
+          }
+        },
+        "current": {
+          "href": "/runs/run-xyz789"
+        }
+      }
+    }
+  }
+}

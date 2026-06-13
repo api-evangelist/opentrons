@@ -1,0 +1,137 @@
+{
+  "name": "Opentrons HTTP API Vocabulary",
+  "description": "Key terms and concepts used in the Opentrons HTTP API for lab automation robots",
+  "source": "https://github.com/Opentrons/opentrons",
+  "terms": [
+    {
+      "term": "Protocol",
+      "definition": "A set of instructions defining an automated biology lab workflow, written in Python or JSON format. Protocols are uploaded to the robot and can be analyzed and executed as runs.",
+      "type": "concept"
+    },
+    {
+      "term": "Run",
+      "definition": "An instance of a protocol being executed on a robot. A run tracks state (idle, running, paused, succeeded, failed) and contains the commands, labware, and pipettes loaded during execution.",
+      "type": "concept"
+    },
+    {
+      "term": "Command",
+      "definition": "An atomic robot instruction such as aspirate, dispense, pick up tip, drop tip, move to well, or load labware. Commands are executed sequentially within a run.",
+      "type": "concept"
+    },
+    {
+      "term": "Pipette",
+      "definition": "A liquid handling instrument attached to the robot's left or right mount. Pipettes aspirate and dispense liquids in specific volumes using interchangeable tips.",
+      "type": "hardware"
+    },
+    {
+      "term": "Labware",
+      "definition": "A physical container placed on the robot deck, such as a well plate, tip rack, reservoir, or tube rack. Each labware type has a definition specifying its geometry and well positions.",
+      "type": "hardware"
+    },
+    {
+      "term": "Well",
+      "definition": "An individual container within a piece of labware identified by name (e.g., 'A1', 'B2'). Wells have geometry including depth, volume, shape, and diameter.",
+      "type": "concept"
+    },
+    {
+      "term": "Aspirate",
+      "definition": "A command to draw liquid into a pipette from a well at a specified volume and flow rate.",
+      "type": "command"
+    },
+    {
+      "term": "Dispense",
+      "definition": "A command to expel liquid from a pipette into a well at a specified volume and flow rate.",
+      "type": "command"
+    },
+    {
+      "term": "PickUpTip",
+      "definition": "A command to pick up a pipette tip from a tip rack at a specified well location.",
+      "type": "command"
+    },
+    {
+      "term": "DropTip",
+      "definition": "A command to eject a pipette tip into a trash container or tip rack well.",
+      "type": "command"
+    },
+    {
+      "term": "Module",
+      "definition": "A hardware accessory attached to the robot deck that provides additional functionality, such as a thermocycler, heater-shaker, temperature module, magnetic module, absorbance plate reader, or Flex Stacker.",
+      "type": "hardware"
+    },
+    {
+      "term": "Flex",
+      "definition": "The Opentrons Flex (OT-3) is Opentrons' advanced lab automation robot with a gripper arm, improved pipetting, larger deck, and support for additional modules. Robot model identifier: 'OT-3 Standard'.",
+      "type": "product"
+    },
+    {
+      "term": "OT-2",
+      "definition": "The Opentrons OT-2 is Opentrons' original lab automation robot. Robot model identifier: 'OT-2 Standard'.",
+      "type": "product"
+    },
+    {
+      "term": "Deck",
+      "definition": "The flat work surface of the robot where labware and modules are placed. The OT-2 has a 4x3 numbered slot grid; the Flex has a 4x3 lettered slot grid (A1-D3).",
+      "type": "hardware"
+    },
+    {
+      "term": "DeckConfiguration",
+      "definition": "The assignment of fixtures to deck slots on the Opentrons Flex, defining which cutout slots contain trashes, staging areas, or module positions.",
+      "type": "concept"
+    },
+    {
+      "term": "LabwareOffset",
+      "definition": "A positional correction vector (x, y, z in mm) applied to a specific labware type and location to compensate for deck calibration or labware placement variation.",
+      "type": "concept"
+    },
+    {
+      "term": "Analysis",
+      "definition": "A dry-run simulation of a protocol that identifies required labware, pipettes, and modules, validates the protocol logic, and reports potential errors without physically moving the robot.",
+      "type": "concept"
+    },
+    {
+      "term": "MaintenanceRun",
+      "definition": "A special run type used for calibration, hardware setup, and tip handling outside of normal protocol execution. Maintenance runs can coexist with protocol runs.",
+      "type": "concept"
+    },
+    {
+      "term": "Estop",
+      "definition": "Emergency Stop button on the Opentrons Flex. When engaged, immediately halts all robot motion. The estop status can be queried and acknowledged via the HTTP API.",
+      "type": "hardware"
+    },
+    {
+      "term": "RunTimeParameter",
+      "definition": "A variable parameter in a protocol that can be set at run creation time without modifying the protocol file. Supports int, float, boolean, string (choice), and CSV file types.",
+      "type": "concept"
+    },
+    {
+      "term": "Gripper",
+      "definition": "A Flex-only instrument that can pick up and move labware between deck positions. Attached at the extension mount, separate from pipette mounts.",
+      "type": "hardware"
+    },
+    {
+      "term": "opentrons-version-header",
+      "definition": "The 'Opentrons-Version' HTTP request header that must be included on most API calls. Specifies which API version to use (2-4) or '*' for the latest version.",
+      "type": "api-concept"
+    },
+    {
+      "term": "Thermocycler",
+      "definition": "A module that runs PCR protocols by cycling through precise temperature stages. The Flex supports the Thermocycler Module Gen2. Controlled via thermocycler/* commands.",
+      "type": "module"
+    },
+    {
+      "term": "HeaterShaker",
+      "definition": "A module that heats and shakes samples simultaneously. Controlled via heaterShaker/* commands for temperature, speed, and labware latch.",
+      "type": "module"
+    },
+    {
+      "term": "AbsorbanceReader",
+      "definition": "A module for performing spectrophotometry measurements on microplates. Controlled via absorbanceReader/* commands.",
+      "type": "module"
+    },
+    {
+      "term": "FlexStacker",
+      "definition": "A Flex-only module that can automatically stack and retrieve labware, enabling automated plate handling workflows.",
+      "type": "module"
+    }
+  ]
+}

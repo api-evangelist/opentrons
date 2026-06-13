@@ -1,0 +1,175 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "ot": "https://opentrons.com/vocabulary/",
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "version": "schema:version",
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "modifiedAt": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+    "Robot": {
+      "@id": "ot:Robot",
+      "@type": "@id"
+    },
+    "robotModel": {
+      "@id": "ot:robotModel",
+      "@type": "xsd:string"
+    },
+    "Protocol": {
+      "@id": "ot:Protocol",
+      "@type": "@id"
+    },
+    "protocolType": {
+      "@id": "ot:protocolType",
+      "@type": "xsd:string"
+    },
+    "protocolKind": {
+      "@id": "ot:protocolKind",
+      "@type": "xsd:string"
+    },
+    "Run": {
+      "@id": "ot:Run",
+      "@type": "@id"
+    },
+    "runStatus": {
+      "@id": "ot:runStatus",
+      "@type": "xsd:string"
+    },
+    "Command": {
+      "@id": "ot:Command",
+      "@type": "@id"
+    },
+    "commandType": {
+      "@id": "ot:commandType",
+      "@type": "xsd:string"
+    },
+    "commandStatus": {
+      "@id": "ot:commandStatus",
+      "@type": "xsd:string"
+    },
+    "Pipette": {
+      "@id": "ot:Pipette",
+      "@type": "@id"
+    },
+    "Gripper": {
+      "@id": "ot:Gripper",
+      "@type": "@id"
+    },
+    "Labware": {
+      "@id": "ot:Labware",
+      "@type": "@id"
+    },
+    "Module": {
+      "@id": "ot:Module",
+      "@type": "@id"
+    },
+    "moduleType": {
+      "@id": "ot:moduleType",
+      "@type": "xsd:string"
+    },
+    "moduleModel": {
+      "@id": "ot:moduleModel",
+      "@type": "xsd:string"
+    },
+    "Well": {
+      "@id": "ot:Well",
+      "@type": "@id"
+    },
+    "wellName": {
+      "@id": "ot:wellName",
+      "@type": "xsd:string"
+    },
+    "volume": {
+      "@id": "ot:volume",
+      "@type": "xsd:decimal"
+    },
+    "flowRate": {
+      "@id": "ot:flowRate",
+      "@type": "xsd:decimal"
+    },
+    "mount": {
+      "@id": "ot:mount",
+      "@type": "xsd:string"
+    },
+    "slotName": {
+      "@id": "ot:slotName",
+      "@type": "xsd:string"
+    },
+    "serialNumber": {
+      "@id": "schema:serialNumber",
+      "@type": "xsd:string"
+    },
+    "LabwareOffset": {
+      "@id": "ot:LabwareOffset",
+      "@type": "@id"
+    },
+    "definitionUri": {
+      "@id": "ot:definitionUri",
+      "@type": "@id"
+    },
+    "Analysis": {
+      "@id": "ot:Analysis",
+      "@type": "@id"
+    },
+    "analysisStatus": {
+      "@id": "ot:analysisStatus",
+      "@type": "xsd:string"
+    },
+    "analysisResult": {
+      "@id": "ot:analysisResult",
+      "@type": "xsd:string"
+    },
+    "RunAction": {
+      "@id": "ot:RunAction",
+      "@type": "@id"
+    },
+    "actionType": {
+      "@id": "ot:actionType",
+      "@type": "xsd:string"
+    },
+    "DeckConfiguration": {
+      "@id": "ot:DeckConfiguration",
+      "@type": "@id"
+    },
+    "CutoutFixture": {
+      "@id": "ot:CutoutFixture",
+      "@type": "@id"
+    },
+    "cutoutId": {
+      "@id": "ot:cutoutId",
+      "@type": "xsd:string"
+    },
+    "cutoutFixtureId": {
+      "@id": "ot:cutoutFixtureId",
+      "@type": "xsd:string"
+    },
+    "Health": {
+      "@id": "ot:Health",
+      "@type": "@id"
+    },
+    "apiVersion": {
+      "@id": "ot:apiVersion",
+      "@type": "xsd:string"
+    },
+    "systemVersion": {
+      "@id": "ot:systemVersion",
+      "@type": "xsd:string"
+    },
+    "fwVersion": {
+      "@id": "ot:fwVersion",
+      "@type": "xsd:string"
+    }
+  }
+}

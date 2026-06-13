@@ -32,6 +32,8 @@ apis:
         url: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
       - type: OpenAPI
         url: http://{ROBOT_IP}:31950/openapi.json
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/opentrons/main/openapi/opentrons-http-api.json
       - type: Redoc
         url: http://{ROBOT_IP}:31950/redoc
       - type: GitHubRepository

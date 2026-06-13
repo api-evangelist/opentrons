@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/opentrons/main/json-schema/opentrons-command-schema.json",
+  "title": "Opentrons Command",
+  "description": "JSON Schema for an Opentrons protocol command, representing an atomic liquid handling or robot control instruction such as aspirate, dispense, pick up tip, move, or module control.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the command"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the command was created"
+    },
+    "startedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When execution of the command began"
+    },
+    "completedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When execution of the command completed"
+    },
+    "commandType": {
+      "type": "string",
+      "description": "The type of command (e.g., aspirate, dispense, pickUpTip, dropTip, moveToWell, moveToCoordinates, home, loadLabware, loadPipette, loadModule)",
+      "examples": [
+        "aspirate",
+        "aspirateInPlace",
+        "dispense",
+        "dispenseInPlace",
+        "pickUpTip",
+        "dropTip",
+        "dropTipInPlace",
+        "moveToWell",
+        "moveToCoordinates",
+        "moveRelative",
+        "home",
+        "loadLabware",
+        "reloadLabware",
+        "loadPipette",
+        "loadModule",
+        "loadLiquid",
+        "blowout",
+        "blowOutInPlace",
+        "touchTip",
+        "mix",
+        "configureForVolume",
+        "prepareToAspirate",
+        "waitForDuration",
+        "waitForResume",
+        "comment",
+        "setRailLights",
+        "moveLabware",
+        "heaterShaker/setTargetTemperature",
+        "heaterShaker/setAndWaitForShakeSpeed",
+        "heaterShaker/openLabwareLatch",
+        "heaterShaker/closeLabwareLatch",
+        "temperatureModule/setTargetTemperature",
+        "temperatureModule/waitForTemperature",
+        "thermocycler/setTargetBlockTemperature",
+        "thermocycler/runProfile",
+        "magneticModule/engage",
+        "magneticModule/disengage",
+        "absorbanceReader/initialize",
+        "absorbanceReader/read"
+      ]
+    },
+    "params": {
+      "type": "object",
+      "description": "Command-specific parameters",
+      "additionalProperties": true
+    },
+    "result": {
+      "type": ["object", "null"],
+      "description": "Command-specific result data returned after execution",
+      "additionalProperties": true
+    },
+    "status": {
+      "type": "string",
+      "enum": ["queued", "running", "succeeded", "failed"],
+      "description": "The current execution status of the command"
+    },
+    "error": {
+      "type": ["object", "null"],
+      "description": "Error details if the command failed"
+    },
+    "intent": {
+      "type": "string",
+      "enum": ["setup", "protocol", "fixit"],
+      "description": "The intent of the command: setup commands run before the protocol, protocol commands are part of the protocol, fixit commands are used for error recovery"
+    },
+    "key": {
+      "type": ["string", "null"],
+      "description": "Optional key for identifying this command, used for error recovery"
+    },
+    "notes": {
+      "type": "array",
+      "description": "Informational notes about the command execution",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "required": ["id", "createdAt", "commandType", "params", "status"],
+  "$defs": {
+    "WellLocation": {
+      "type": "object",
+      "description": "A location within a labware well",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "enum": ["top", "bottom", "center", "meniscus"],
+          "description": "The reference point within the well"
+        },
+        "offset": {
+          "type": "object",
+          "description": "Offset from the origin in millimeters",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "z": { "type": "number" }
+          }
+        },
+        "volumeOffset": {
+          "type": ["string", "number"],
+          "description": "Volume-based offset from the meniscus"
+        }
+      }
+    },
+    "AspirateParams": {
+      "type": "object",
+      "description": "Parameters for an aspirate command",
+      "properties": {
+        "pipetteId": {
+          "type": "string",
+          "description": "The ID of the pipette to use"
+        },
+        "labwareId": {
+          "type": "string",
+          "description": "The ID of the labware containing the well"
+        },
+        "wellName": {
+          "type": "string",
+          "description": "The name of the well (e.g., 'A1', 'B2')"
+        },
+        "wellLocation": {
+          "$ref": "#/$defs/WellLocation"
+        },
+        "volume": {
+          "type": "number",
+          "description": "Volume to aspirate in microliters"
+        },
+        "flowRate": {
+          "type": "number",
+          "description": "Flow rate in microliters per second"
+        }
+      },
+      "required": ["pipetteId", "labwareId", "wellName", "volume", "flowRate"]
+    },
+    "DispenseParams": {
+      "type": "object",
+      "description": "Parameters for a dispense command",
+      "properties": {
+        "pipetteId": {
+          "type": "string"
+        },
+        "labwareId": {
+          "type": "string"
+        },
+        "wellName": {
+          "type": "string"
+        },
+        "wellLocation": {
+          "$ref": "#/$defs/WellLocation"
+        },
+        "volume": {
+          "type": "number",
+          "description": "Volume to dispense in microliters"
+        },
+        "flowRate": {
+          "type": "number",
+          "description": "Flow rate in microliters per second"
+        },
+        "pushOut": {
+          "type": "number",
+          "description": "Extra volume to push out after dispense in microliters"
+        }
+      },
+      "required": ["pipetteId", "labwareId", "wellName", "volume", "flowRate"]
+    }
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/opentrons/main/json-schema/opentrons-run-schema.json",
+  "title": "Opentrons Run",
+  "description": "JSON Schema for an Opentrons robot protocol run, representing the lifecycle of executing a protocol or ad-hoc commands on an Opentrons Flex or OT-2 robot.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the run"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the run was created"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["idle", "running", "paused", "stop-requested", "stopped", "failed", "succeeded", "finishing"],
+      "description": "The current status of the run"
+    },
+    "current": {
+      "type": "boolean",
+      "description": "Whether this is the currently active run on the robot"
+    },
+    "protocolId": {
+      "type": ["string", "null"],
+      "description": "The ID of the protocol associated with this run, if any"
+    },
+    "actions": {
+      "type": "array",
+      "description": "Control actions that have been issued to this run",
+      "items": {
+        "$ref": "#/$defs/RunAction"
+      }
+    },
+    "errors": {
+      "type": "array",
+      "description": "Errors that have occurred during this run",
+      "items": {
+        "type": "object"
+      }
+    },
+    "pipettes": {
+      "type": "array",
+      "description": "Pipettes loaded for this run",
+      "items": {
+        "type": "object"
+      }
+    },
+    "labware": {
+      "type": "array",
+      "description": "Labware loaded for this run",
+      "items": {
+        "type": "object"
+      }
+    },
+    "modules": {
+      "type": "array",
+      "description": "Modules loaded for this run",
+      "items": {
+        "type": "object"
+      }
+    },
+    "liquids": {
+      "type": "array",
+      "description": "Liquids defined for this run",
+      "items": {
+        "type": "object"
+      }
+    },
+    "runTimeParameters": {
+      "type": "array",
+      "description": "Runtime parameter values used for this run",
+      "items": {
+        "type": "object"
+      }
+    },
+    "labwareOffsets": {
+      "type": "array",
+      "description": "Labware position offsets applied to this run",
+      "items": {
+        "$ref": "#/$defs/LabwareOffset"
+      }
+    }
+  },
+  "required": ["id", "createdAt", "status", "current", "actions", "errors", "pipettes", "labware", "modules"],
+  "$defs": {
+    "RunAction": {
+      "type": "object",
+      "description": "A control action issued to a run",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this action"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the action was issued"
+        },
+        "actionType": {
+          "type": "string",
+          "enum": ["play", "pause", "stop", "resume-from-recovery", "resume-from-recovery-assuming-false-positive"],
+          "description": "The type of control action"
+        }
+      },
+      "required": ["id", "createdAt", "actionType"]
+    },
+    "LabwareOffset": {
+      "type": "object",
+      "description": "A positional offset for labware to correct for deck calibration",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "definitionUri": {
+          "type": "string",
+          "description": "The labware definition URI this offset applies to"
+        },
+        "location": {
+          "type": "object",
+          "description": "Where the labware is placed on the deck"
+        },
+        "vector": {
+          "type": "object",
+          "description": "The x, y, z offset vector in millimeters",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "z": { "type": "number" }
+          },
+          "required": ["x", "y", "z"]
+        }
+      },
+      "required": ["id", "createdAt", "definitionUri", "location", "vector"]
+    }
+  }
+}

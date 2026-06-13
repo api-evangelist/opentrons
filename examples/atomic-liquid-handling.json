@@ -1,0 +1,202 @@
+{
+  "title": "Atomic Liquid Handling Commands",
+  "description": "Examples of stateless atomic liquid handling commands issued directly to an Opentrons robot via the /commands endpoint. These commands execute immediately without needing a protocol or run.",
+  "examples": [
+    {
+      "title": "Load Labware",
+      "description": "Load a 96-well plate into deck slot D1 on a Flex robot",
+      "request": {
+        "method": "POST",
+        "url": "http://{ROBOT_IP}:31950/commands",
+        "headers": {
+          "Opentrons-Version": "*",
+          "Content-Type": "application/json"
+        },
+        "query": {
+          "waitUntilComplete": true,
+          "timeout": 10000
+        },
+        "body": {
+          "data": {
+            "commandType": "loadLabware",
+            "params": {
+              "location": {
+                "slotName": "D1"
+              },
+              "loadName": "corning_96_wellplate_360ul_flat",
+              "namespace": "opentrons",
+              "version": 2,
+              "displayName": "Source Plate"
+            },
+            "intent": "setup"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": {
+          "data": {
+            "id": "cmd-001",
+            "createdAt": "2026-06-13T14:30:00.000Z",
+            "startedAt": "2026-06-13T14:30:00.001Z",
+            "completedAt": "2026-06-13T14:30:00.010Z",
+            "commandType": "loadLabware",
+            "params": {
+              "location": { "slotName": "D1" },
+              "loadName": "corning_96_wellplate_360ul_flat",
+              "namespace": "opentrons",
+              "version": 2,
+              "displayName": "Source Plate"
+            },
+            "result": {
+              "labwareId": "labware-001",
+              "definition": {},
+              "offsetId": null
+            },
+            "status": "succeeded",
+            "error": null,
+            "intent": "setup"
+          }
+        }
+      }
+    },
+    {
+      "title": "Aspirate",
+      "description": "Aspirate 50 uL from well A1 of a loaded labware",
+      "request": {
+        "method": "POST",
+        "url": "http://{ROBOT_IP}:31950/commands",
+        "headers": {
+          "Opentrons-Version": "*",
+          "Content-Type": "application/json"
+        },
+        "query": {
+          "waitUntilComplete": true,
+          "timeout": 30000
+        },
+        "body": {
+          "data": {
+            "commandType": "aspirate",
+            "params": {
+              "pipetteId": "pipette-001",
+              "labwareId": "labware-001",
+              "wellName": "A1",
+              "wellLocation": {
+                "origin": "bottom",
+                "offset": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 1.0
+                }
+              },
+              "volume": 50.0,
+              "flowRate": 35.0
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": {
+          "data": {
+            "id": "cmd-002",
+            "createdAt": "2026-06-13T14:30:05.000Z",
+            "startedAt": "2026-06-13T14:30:05.001Z",
+            "completedAt": "2026-06-13T14:30:06.800Z",
+            "commandType": "aspirate",
+            "params": {
+              "pipetteId": "pipette-001",
+              "labwareId": "labware-001",
+              "wellName": "A1",
+              "wellLocation": {
+                "origin": "bottom",
+                "offset": { "x": 0, "y": 0, "z": 1.0 }
+              },
+              "volume": 50.0,
+              "flowRate": 35.0
+            },
+            "result": {
+              "volume": 50.0,
+              "position": {
+                "x": 14.38,
+                "y": 74.24,
+                "z": 2.0
+              }
+            },
+            "status": "succeeded",
+            "error": null
+          }
+        }
+      }
+    },
+    {
+      "title": "Dispense",
+      "description": "Dispense 50 uL into well B1 of a destination plate",
+      "request": {
+        "method": "POST",
+        "url": "http://{ROBOT_IP}:31950/commands",
+        "headers": {
+          "Opentrons-Version": "*",
+          "Content-Type": "application/json"
+        },
+        "query": {
+          "waitUntilComplete": true,
+          "timeout": 30000
+        },
+        "body": {
+          "data": {
+            "commandType": "dispense",
+            "params": {
+              "pipetteId": "pipette-001",
+              "labwareId": "labware-002",
+              "wellName": "B1",
+              "wellLocation": {
+                "origin": "bottom",
+                "offset": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 1.0
+                }
+              },
+              "volume": 50.0,
+              "flowRate": 35.0
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": {
+          "data": {
+            "id": "cmd-003",
+            "createdAt": "2026-06-13T14:30:07.000Z",
+            "startedAt": "2026-06-13T14:30:07.001Z",
+            "completedAt": "2026-06-13T14:30:08.200Z",
+            "commandType": "dispense",
+            "params": {
+              "pipetteId": "pipette-001",
+              "labwareId": "labware-002",
+              "wellName": "B1",
+              "wellLocation": {
+                "origin": "bottom",
+                "offset": { "x": 0, "y": 0, "z": 1.0 }
+              },
+              "volume": 50.0,
+              "flowRate": 35.0
+            },
+            "result": {
+              "volume": 50.0,
+              "position": {
+                "x": 14.38,
+                "y": 65.24,
+                "z": 2.0
+              }
+            },
+            "status": "succeeded",
+            "error": null
+          }
+        }
+      }
+    }
+  ]
+}
