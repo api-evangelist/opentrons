@@ -1,7 +1,7 @@
 aid: opentrons
 name: Opentrons
 description: Opentrons is a lab automation platform providing a REST HTTP API and Python Protocol API for controlling liquid handling robots such as the Opentrons Flex and OT-2. Developers can programmatically manage protocols, control pipettes, run liquid handling workflows, manage labware, and integrate biology lab automation into their applications. The HTTP API operates on-robot over a local network and exposes OpenAPI-defined endpoints for protocol upload, run management, atomic liquid handling commands, and hardware control.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/opentrons/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -18,7 +18,7 @@ tags:
 apis:
   - name: Opentrons HTTP API
     description: The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
     baseURL: http://{ROBOT_IP}:31950
     tags:
@@ -46,7 +46,7 @@ apis:
         email: support@opentrons.com
   - name: Opentrons Python Protocol API
     description: The Opentrons Python Protocol API is an open-source Python framework for writing automated biology lab protocols that run on Opentrons Flex and OT-2 robots. It provides programmatic control over pipettes, labware, deck configuration, hardware modules (thermocyclers, heater-shakers, temperature modules, magnetic modules, absorbance readers), and supports dynamic decision-making and custom integrations. Protocols are executed by the robot server and can be controlled via the HTTP API or Opentrons App.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://docs.opentrons.com/v2/
     baseURL: https://docs.opentrons.com
     tags:
