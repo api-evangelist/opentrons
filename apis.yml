@@ -74,6 +74,8 @@ apis:
         url: https://support.opentrons.com/
         email: support@opentrons.com
 common:
+  - type: DomainSecurity
+    url: security/opentrons-domain-security.yml
   - type: Website
     url: https://opentrons.com/
   - type: Documentation
