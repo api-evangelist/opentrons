@@ -1,0 +1,133 @@
+openapi: 3.1.0
+info:
+  title: Opentrons HTTP Attached Instruments Robot API
+  description: The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot at /openapi.json.
+  version: '4'
+  contact:
+    name: Opentrons Support
+    url: https://support.opentrons.com/
+    email: support@opentrons.com
+  license:
+    name: Apache 2.0
+    url: https://github.com/Opentrons/opentrons/blob/edge/LICENSE
+  x-api-version-header: Opentrons-Version
+  x-min-api-version: 2
+servers:
+- url: http://{robotIP}:31950
+  description: Opentrons robot local network server
+  variables:
+    robotIP:
+      default: 192.168.1.100
+      description: The IP address of the Opentrons robot on the local network
+tags:
+- name: Robot
+  description: Robot-level control including estop and door status
+paths:
+  /robot/control/estopStatus:
+    get:
+      tags:
+      - Robot
+      summary: Get connected estop status
+      description: Get the current status of the emergency stop (estop) button.
+      operationId: getEstopStatus
+      parameters:
+      - $ref: '#/components/parameters/OTVersionHeader'
+      responses:
+        '200':
+          description: Estop status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstopStatusResponse'
+  /robot/control/acknowledgeEstopDisengage:
+    put:
+      tags:
+      - Robot
+      summary: Acknowledge and clear an Estop event
+      description: Acknowledge that the estop has been disengaged and clear the estop event, allowing normal operation to resume.
+      operationId: acknowledgeEstopDisengage
+      parameters:
+      - $ref: '#/components/parameters/OTVersionHeader'
+      responses:
+        '200':
+          description: Estop event acknowledged
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstopStatusResponse'
+  /robot/door/status:
+    get:
+      tags:
+      - Robot
+      summary: Get the status of the robot door
+      description: Get the current open/closed status of the robot door.
+      operationId: getDoorStatus
+      parameters:
+      - $ref: '#/components/parameters/OTVersionHeader'
+      responses:
+        '200':
+          description: Door status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DoorStatusResponse'
+components:
+  schemas:
+    DoorStatusResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            status:
+              type: string
+              enum:
+              - open
+              - closed
+              description: The current door status
+            doorRequiredClosedForProtocol:
+              type: boolean
+              description: Whether the door must be closed to run a protocol
+    EstopStatusResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            status:
+              type: string
+              enum:
+              - physicallyEngaged
+              - logicallyEngaged
+              - disengaged
+              - notPresent
+              description: The current estop status
+            leftEstopPhysicalStatus:
+              type: string
+              enum:
+              - engaged
+              - disengaged
+              - notPresent
+              nullable: true
+            rightEstopPhysicalStatus:
+              type: string
+              enum:
+              - engaged
+              - disengaged
+              - notPresent
+              nullable: true
+  parameters:
+    OTVersionHeader:
+      name: Opentrons-Version
+      in: header
+      required: true
+      description: The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.
+      schema:
+        oneOf:
+        - type: string
+          enum:
+          - '*'
+        - type: integer
+          minimum: 2
+          maximum: 4
+      example: '*'

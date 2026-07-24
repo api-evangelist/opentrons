@@ -1,0 +1,125 @@
+openapi: 3.1.0
+info:
+  title: Opentrons HTTP Attached Instruments Health API
+  description: The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot at /openapi.json.
+  version: '4'
+  contact:
+    name: Opentrons Support
+    url: https://support.opentrons.com/
+    email: support@opentrons.com
+  license:
+    name: Apache 2.0
+    url: https://github.com/Opentrons/opentrons/blob/edge/LICENSE
+  x-api-version-header: Opentrons-Version
+  x-min-api-version: 2
+servers:
+- url: http://{robotIP}:31950
+  description: Opentrons robot local network server
+  variables:
+    robotIP:
+      default: 192.168.1.100
+      description: The IP address of the Opentrons robot on the local network
+tags:
+- name: Health
+  description: Robot server health and status endpoints
+paths:
+  /health:
+    get:
+      tags:
+      - Health
+      summary: Get server health
+      description: Get information about the health of the robot server. Use the health endpoint to check that the robot server is running and ready to operate. A 200 OK response means the server is running. The response includes information about the software and system.
+      operationId: getHealth
+      responses:
+        '200':
+          description: Robot server is healthy and ready
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '503':
+          description: Robot motor controller is not ready
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicResponse'
+components:
+  schemas:
+    HealthLinks:
+      type: object
+      description: Links to related resources on the robot server
+      properties:
+        apiLog:
+          type: string
+          description: Path to the API log
+        serialLog:
+          type: string
+          description: Path to the serial log
+        serverLog:
+          type: string
+          description: Path to the server log
+        apiSpec:
+          type: string
+          description: Path to the OpenAPI specification
+        systemTime:
+          type: string
+          description: Path to the system time endpoint
+    BasicResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    Health:
+      type: object
+      description: Robot server health information
+      properties:
+        name:
+          type: string
+          description: The robot's name
+        api_version:
+          type: string
+          description: The version of the robot's Python API
+        fw_version:
+          type: string
+          description: The firmware version of the robot's motor controller
+        board_revision:
+          type: string
+          description: The board revision of the robot
+        system_version:
+          type: string
+          description: The system (OS) version of the robot
+        maximum_protocol_api_version:
+          type: array
+          items:
+            type: integer
+          description: The maximum supported Protocol API version [major, minor]
+        minimum_protocol_api_version:
+          type: array
+          items:
+            type: integer
+          description: The minimum supported Protocol API version [major, minor]
+        robot_model:
+          type: string
+          enum:
+          - OT-2 Standard
+          - OT-3 Standard
+          description: The model of the robot
+        links:
+          $ref: '#/components/schemas/HealthLinks'
+        logs:
+          type: array
+          items:
+            type: string
+          description: Available log file paths
+        robot_serial:
+          type: string
+          description: The robot's serial number
+          nullable: true
+      required:
+      - name
+      - api_version
+      - fw_version
+      - system_version
+      - maximum_protocol_api_version
+      - minimum_protocol_api_version
+      - robot_model

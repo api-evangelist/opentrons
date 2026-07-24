@@ -1,0 +1,109 @@
+openapi: 3.1.0
+info:
+  title: Opentrons HTTP Attached Instruments Attached Modules API
+  description: The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot at /openapi.json.
+  version: '4'
+  contact:
+    name: Opentrons Support
+    url: https://support.opentrons.com/
+    email: support@opentrons.com
+  license:
+    name: Apache 2.0
+    url: https://github.com/Opentrons/opentrons/blob/edge/LICENSE
+  x-api-version-header: Opentrons-Version
+  x-min-api-version: 2
+servers:
+- url: http://{robotIP}:31950
+  description: Opentrons robot local network server
+  variables:
+    robotIP:
+      default: 192.168.1.100
+      description: The IP address of the Opentrons robot on the local network
+tags:
+- name: Attached Modules
+  description: Query attached hardware modules
+paths:
+  /modules:
+    get:
+      tags:
+      - Attached Modules
+      summary: Get attached modules
+      description: Get a list of all hardware modules currently attached to the robot, including thermocyclers, heater-shakers, temperature modules, magnetic modules, and absorbance plate readers.
+      operationId: getModules
+      parameters:
+      - $ref: '#/components/parameters/OTVersionHeader'
+      responses:
+        '200':
+          description: List of attached modules
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleListResponse'
+components:
+  parameters:
+    OTVersionHeader:
+      name: Opentrons-Version
+      in: header
+      required: true
+      description: The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.
+      schema:
+        oneOf:
+        - type: string
+          enum:
+          - '*'
+        - type: integer
+          minimum: 2
+          maximum: 4
+      example: '*'
+  schemas:
+    Module:
+      type: object
+      description: A hardware module attached to the robot
+      properties:
+        id:
+          type: string
+        serialNumber:
+          type: string
+        firmwareVersion:
+          type: string
+        hardwareRevision:
+          type: string
+        hasAvailableUpdate:
+          type: boolean
+        moduleType:
+          type: string
+          enum:
+          - thermocyclerModuleType
+          - temperatureModuleType
+          - magneticModuleType
+          - heaterShakerModuleType
+          - magneticBlockType
+          - absorbanceReaderType
+          - flexStackerModuleType
+        moduleModel:
+          type: string
+        slotName:
+          type: string
+        data:
+          type: object
+          description: Module-specific status data
+          additionalProperties: true
+        usbPort:
+          type: object
+          properties:
+            port:
+              type: integer
+            portGroup:
+              type: string
+            hubPort:
+              type: integer
+              nullable: true
+            path:
+              type: string
+    ModuleListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Module'

@@ -1,0 +1,218 @@
+openapi: 3.1.0
+info:
+  title: Opentrons HTTP Attached Instruments Simple Commands API
+  description: The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot at /openapi.json.
+  version: '4'
+  contact:
+    name: Opentrons Support
+    url: https://support.opentrons.com/
+    email: support@opentrons.com
+  license:
+    name: Apache 2.0
+    url: https://github.com/Opentrons/opentrons/blob/edge/LICENSE
+  x-api-version-header: Opentrons-Version
+  x-min-api-version: 2
+servers:
+- url: http://{robotIP}:31950
+  description: Opentrons robot local network server
+  variables:
+    robotIP:
+      default: 192.168.1.100
+      description: The IP address of the Opentrons robot on the local network
+tags:
+- name: Simple Commands
+  description: Stateless atomic liquid handling commands
+paths:
+  /commands:
+    post:
+      tags:
+      - Simple Commands
+      summary: Add a command to be executed
+      description: Execute an atomic liquid handling command directly on the robot without needing a run. These stateless commands are executed immediately.
+      operationId: createCommand
+      parameters:
+      - $ref: '#/components/parameters/OTVersionHeader'
+      - name: waitUntilComplete
+        in: query
+        schema:
+          type: boolean
+          default: false
+      - name: timeout
+        in: query
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommandRequest'
+      responses:
+        '201':
+          description: Command created and queued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandResponse'
+    get:
+      tags:
+      - Simple Commands
+      summary: Get a list of queued and executed commands
+      description: Get a list of stateless commands that have been issued to the robot.
+      operationId: getCommands
+      parameters:
+      - $ref: '#/components/parameters/OTVersionHeader'
+      - name: cursor
+        in: query
+        schema:
+          type: integer
+      - name: pageLength
+        in: query
+        schema:
+          type: integer
+          default: 20
+      responses:
+        '200':
+          description: List of commands
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandListResponse'
+  /commands/{commandId}:
+    get:
+      tags:
+      - Simple Commands
+      summary: Get a single stateless command
+      description: Get the details of a specific stateless command by its ID.
+      operationId: getCommand
+      parameters:
+      - $ref: '#/components/parameters/OTVersionHeader'
+      - name: commandId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Command details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandResponse'
+components:
+  schemas:
+    CommandResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Command'
+    Command:
+      type: object
+      description: A command that was executed or is queued
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        startedAt:
+          type: string
+          format: date-time
+          nullable: true
+        completedAt:
+          type: string
+          format: date-time
+          nullable: true
+        commandType:
+          type: string
+        params:
+          type: object
+          additionalProperties: true
+        result:
+          type: object
+          nullable: true
+          additionalProperties: true
+        status:
+          type: string
+          enum:
+          - queued
+          - running
+          - succeeded
+          - failed
+        error:
+          type: object
+          nullable: true
+        intent:
+          type: string
+          enum:
+          - setup
+          - protocol
+          - fixit
+        key:
+          type: string
+          nullable: true
+    CommandRequest:
+      type: object
+      description: A command to execute on the robot
+      properties:
+        data:
+          type: object
+          properties:
+            commandType:
+              type: string
+              description: The type of command to execute (e.g., 'aspirate', 'dispense', 'pickUpTip')
+            params:
+              type: object
+              description: Command-specific parameters
+              additionalProperties: true
+            intent:
+              type: string
+              enum:
+              - setup
+              - protocol
+              - fixit
+              description: The intent of the command
+            key:
+              type: string
+              description: Optional key to identify this command for error recovery
+          required:
+          - commandType
+          - params
+      required:
+      - data
+    CommandListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Command'
+        meta:
+          $ref: '#/components/schemas/MultiBodyMeta'
+        links:
+          type: object
+    MultiBodyMeta:
+      type: object
+      description: Pagination metadata for multi-item responses
+      properties:
+        cursor:
+          type: integer
+          description: The index of the first item in this page
+        totalLength:
+          type: integer
+          description: The total number of items available
+  parameters:
+    OTVersionHeader:
+      name: Opentrons-Version
+      in: header
+      required: true
+      description: The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.
+      schema:
+        oneOf:
+        - type: string
+          enum:
+          - '*'
+        - type: integer
+          minimum: 2
+          maximum: 4
+      example: '*'
