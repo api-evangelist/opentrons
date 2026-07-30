@@ -1,7 +1,19 @@
 aid: opentrons
 name: Opentrons
 description: Opentrons is a lab automation platform providing a REST HTTP API and Python Protocol API for controlling liquid handling robots such as the Opentrons Flex and OT-2. Developers can programmatically manage protocols, control pipettes, run liquid handling workflows, manage labware, and integrate biology lab automation into their applications. The HTTP API operates on-robot over a local network and exposes OpenAPI-defined endpoints for protocol upload, run management, atomic liquid handling commands, and hardware control.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Paid
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/opentrons.png
 url: https://raw.githubusercontent.com/api-evangelist/opentrons/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -16,63 +28,202 @@ tags:
   - Hardware Control
   - Open Source
 apis:
-  - name: Opentrons HTTP API
-    description: The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
-    baseURL: http://{ROBOT_IP}:31950
-    tags:
-      - Liquid Handling
-      - Protocol Management
-      - Robot Control
-      - Run Management
-      - Hardware Control
-    properties:
-      - type: Documentation
-        url: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
-      - type: OpenAPI
-        url: http://{ROBOT_IP}:31950/openapi.json
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/opentrons/main/openapi/opentrons-http-api.json
-      - type: Redoc
-        url: http://{ROBOT_IP}:31950/redoc
-      - type: GitHubRepository
-        url: https://github.com/Opentrons/opentrons
-      - type: IntegrationTools
-        url: https://github.com/Opentrons/opentrons-integration-tools
-    contact:
-      - FN: Opentrons Support
-        url: https://support.opentrons.com/
-        email: support@opentrons.com
-  - name: Opentrons Python Protocol API
-    description: The Opentrons Python Protocol API is an open-source Python framework for writing automated biology lab protocols that run on Opentrons Flex and OT-2 robots. It provides programmatic control over pipettes, labware, deck configuration, hardware modules (thermocyclers, heater-shakers, temperature modules, magnetic modules, absorbance readers), and supports dynamic decision-making and custom integrations. Protocols are executed by the robot server and can be controlled via the HTTP API or Opentrons App.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.opentrons.com/v2/
-    baseURL: https://docs.opentrons.com
-    tags:
-      - Python
-      - Protocol
-      - Liquid Handling
-      - Lab Automation
-      - Hardware Modules
-      - Open Source
-    properties:
-      - type: Documentation
-        url: https://docs.opentrons.com/v2/
-      - type: GettingStarted
-        url: https://docs.opentrons.com/v2/new_quickstart.html
-      - type: APIReference
-        url: https://docs.opentrons.com/v2/new_protocol_api.html
-      - type: ProtocolExamples
-        url: https://docs.opentrons.com/v2/new_examples.html
-      - type: GitHubRepository
-        url: https://github.com/Opentrons/opentrons
-      - type: PyPI
-        url: https://pypi.org/project/opentrons/
-    contact:
-      - FN: Opentrons Support
-        url: https://support.opentrons.com/
-        email: support@opentrons.com
+- name: Opentrons Python Protocol API
+  description: >-
+    The Opentrons Python Protocol API is an open-source Python framework for writing automated biology
+    lab protocols that run on Opentrons Flex and OT-2 robots. It provides programmatic control over pipettes,
+    labware, deck configuration, hardware modules (thermocyclers, heater-shakers, temperature modules,
+    magnetic modules, absorbance readers), and supports dynamic decision-making and custom integrations.
+    Protocols are executed by the robot server and can be controlled via the HTTP API or Opentrons App.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.opentrons.com/v2/
+  baseURL: https://docs.opentrons.com
+  tags:
+  - Python
+  - Protocol
+  - Liquid Handling
+  - Lab Automation
+  - Hardware Modules
+  - Open Source
+  properties:
+  - type: Documentation
+    url: https://docs.opentrons.com/v2/
+  - type: GettingStarted
+    url: https://docs.opentrons.com/v2/new_quickstart.html
+  - type: APIReference
+    url: https://docs.opentrons.com/v2/new_protocol_api.html
+  - type: ProtocolExamples
+    url: https://docs.opentrons.com/v2/new_examples.html
+  - type: GitHubRepository
+    url: https://github.com/Opentrons/opentrons
+  - type: PyPI
+    url: https://pypi.org/project/opentrons/
+  contact:
+  - FN: Opentrons Support
+    url: https://support.opentrons.com/
+    email: support@opentrons.com
+- aid: opentrons:opentrons-attached-instruments-api
+  name: Opentrons Attached Instruments API
+  description: Query attached pipettes and grippers
+  humanURL: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  baseURL: http://{ROBOT_IP}:31950
+  tags:
+  - Attached Instruments
+  properties:
+  - type: OpenAPI
+    url: openapi/opentrons-attached-instruments-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  - type: Redoc
+    url: http://{ROBOT_IP}:31950/redoc
+  - type: GitHubRepository
+    url: https://github.com/Opentrons/opentrons
+  - type: IntegrationTools
+    url: https://github.com/Opentrons/opentrons-integration-tools
+- aid: opentrons:opentrons-attached-modules-api
+  name: Opentrons Attached Modules API
+  description: Query attached hardware modules
+  humanURL: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  baseURL: http://{ROBOT_IP}:31950
+  tags:
+  - Attached Modules
+  properties:
+  - type: OpenAPI
+    url: openapi/opentrons-attached-modules-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  - type: Redoc
+    url: http://{ROBOT_IP}:31950/redoc
+  - type: GitHubRepository
+    url: https://github.com/Opentrons/opentrons
+  - type: IntegrationTools
+    url: https://github.com/Opentrons/opentrons-integration-tools
+- aid: opentrons:opentrons-flex-deck-configuration-api
+  name: Opentrons Flex Deck Configuration API
+  description: Configure the Flex robot deck
+  humanURL: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  baseURL: http://{ROBOT_IP}:31950
+  tags:
+  - Flex Deck Configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/opentrons-flex-deck-configuration-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  - type: Redoc
+    url: http://{ROBOT_IP}:31950/redoc
+  - type: GitHubRepository
+    url: https://github.com/Opentrons/opentrons
+  - type: IntegrationTools
+    url: https://github.com/Opentrons/opentrons-integration-tools
+- aid: opentrons:opentrons-health-api
+  name: Opentrons Health API
+  description: Robot server health and status endpoints
+  humanURL: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  baseURL: http://{ROBOT_IP}:31950
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/opentrons-health-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  - type: Redoc
+    url: http://{ROBOT_IP}:31950/redoc
+  - type: GitHubRepository
+    url: https://github.com/Opentrons/opentrons
+  - type: IntegrationTools
+    url: https://github.com/Opentrons/opentrons-integration-tools
+- aid: opentrons:opentrons-protocol-management-api
+  name: Opentrons Protocol Management API
+  description: Upload, manage, and analyze protocols
+  humanURL: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  baseURL: http://{ROBOT_IP}:31950
+  tags:
+  - Protocol Management
+  properties:
+  - type: OpenAPI
+    url: openapi/opentrons-protocol-management-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  - type: Redoc
+    url: http://{ROBOT_IP}:31950/redoc
+  - type: GitHubRepository
+    url: https://github.com/Opentrons/opentrons
+  - type: IntegrationTools
+    url: https://github.com/Opentrons/opentrons-integration-tools
+- aid: opentrons:opentrons-robot-api
+  name: Opentrons Robot API
+  description: Robot-level control including estop and door status
+  humanURL: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  baseURL: http://{ROBOT_IP}:31950
+  tags:
+  - Robot
+  properties:
+  - type: OpenAPI
+    url: openapi/opentrons-robot-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  - type: Redoc
+    url: http://{ROBOT_IP}:31950/redoc
+  - type: GitHubRepository
+    url: https://github.com/Opentrons/opentrons
+  - type: IntegrationTools
+    url: https://github.com/Opentrons/opentrons-integration-tools
+- aid: opentrons:opentrons-run-management-api
+  name: Opentrons Run Management API
+  description: Create and control protocol runs
+  humanURL: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  baseURL: http://{ROBOT_IP}:31950
+  tags:
+  - Run Management
+  properties:
+  - type: OpenAPI
+    url: openapi/opentrons-run-management-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  - type: Redoc
+    url: http://{ROBOT_IP}:31950/redoc
+  - type: GitHubRepository
+    url: https://github.com/Opentrons/opentrons
+  - type: IntegrationTools
+    url: https://github.com/Opentrons/opentrons-integration-tools
+- aid: opentrons:opentrons-simple-commands-api
+  name: Opentrons Simple Commands API
+  description: Stateless atomic liquid handling commands
+  humanURL: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  baseURL: http://{ROBOT_IP}:31950
+  tags:
+  - Simple Commands
+  properties:
+  - type: OpenAPI
+    url: openapi/opentrons-simple-commands-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  - type: Redoc
+    url: http://{ROBOT_IP}:31950/redoc
+  - type: GitHubRepository
+    url: https://github.com/Opentrons/opentrons
+  - type: IntegrationTools
+    url: https://github.com/Opentrons/opentrons-integration-tools
+- aid: opentrons:opentrons-system-control-api
+  name: Opentrons System Control API
+  description: System time and robot control
+  humanURL: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  baseURL: http://{ROBOT_IP}:31950
+  tags:
+  - System Control
+  properties:
+  - type: OpenAPI
+    url: openapi/opentrons-system-control-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api
+  - type: Redoc
+    url: http://{ROBOT_IP}:31950/redoc
+  - type: GitHubRepository
+    url: https://github.com/Opentrons/opentrons
+  - type: IntegrationTools
+    url: https://github.com/Opentrons/opentrons-integration-tools
 common:
   - type: AgenticAccess
     url: agentic-access/opentrons-agentic-access.yml
