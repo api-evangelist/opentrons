@@ -1,0 +1,2088 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Opentrons HTTP API",
+    "description": "The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot at /openapi.json.",
+    "version": "4",
+    "contact": {
+      "name": "Opentrons Support",
+      "url": "https://support.opentrons.com/",
+      "email": "support@opentrons.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://github.com/Opentrons/opentrons/blob/edge/LICENSE"
+    },
+    "x-api-version-header": "Opentrons-Version",
+    "x-min-api-version": 2
+  },
+  "servers": [
+    {
+      "url": "http://{robotIP}:31950",
+      "description": "Opentrons robot local network server",
+      "variables": {
+        "robotIP": {
+          "default": "192.168.1.100",
+          "description": "The IP address of the Opentrons robot on the local network"
+        }
+      }
+    }
+  ],
+  "tags": [
+    {
+      "name": "Health",
+      "description": "Robot server health and status endpoints"
+    },
+    {
+      "name": "Protocol Management",
+      "description": "Upload, manage, and analyze protocols"
+    },
+    {
+      "name": "Run Management",
+      "description": "Create and control protocol runs"
+    },
+    {
+      "name": "Simple Commands",
+      "description": "Stateless atomic liquid handling commands"
+    },
+    {
+      "name": "Attached Modules",
+      "description": "Query attached hardware modules"
+    },
+    {
+      "name": "Attached Instruments",
+      "description": "Query attached pipettes and grippers"
+    },
+    {
+      "name": "Flex Deck Configuration",
+      "description": "Configure the Flex robot deck"
+    },
+    {
+      "name": "System Control",
+      "description": "System time and robot control"
+    },
+    {
+      "name": "Robot",
+      "description": "Robot-level control including estop and door status"
+    },
+    {
+      "name": "Maintenance Run Management",
+      "description": "Manage maintenance runs for calibration and hardware control"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": ["Health"],
+        "summary": "Get server health",
+        "description": "Get information about the health of the robot server. Use the health endpoint to check that the robot server is running and ready to operate. A 200 OK response means the server is running. The response includes information about the software and system.",
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "description": "Robot server is healthy and ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Robot motor controller is not ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/protocols": {
+      "post": {
+        "tags": ["Protocol Management"],
+        "summary": "Upload a protocol",
+        "description": "Upload a new protocol file (Python or JSON) to the robot. The protocol will be analyzed after upload.",
+        "operationId": "uploadProtocol",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    "description": "Protocol file(s) to upload (Python .py or JSON .json)"
+                  },
+                  "runTimeParameterValues": {
+                    "type": "string",
+                    "description": "JSON-encoded runtime parameter values"
+                  },
+                  "runTimeParameterFiles": {
+                    "type": "string",
+                    "description": "JSON-encoded runtime parameter CSV file associations"
+                  },
+                  "protocolKind": {
+                    "type": "string",
+                    "enum": ["standard", "quick-transfer"],
+                    "description": "The kind of protocol being uploaded"
+                  }
+                },
+                "required": ["files"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Protocol uploaded and analysis queued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProtocolResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Protocol file is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Protocol Management"],
+        "summary": "Get uploaded protocols",
+        "description": "Get a list of all protocols that have been uploaded to the robot.",
+        "operationId": "getProtocols",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "protocolKind",
+            "in": "query",
+            "description": "Filter by protocol kind",
+            "schema": {
+              "type": "string",
+              "enum": ["standard", "quick-transfer"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of uploaded protocols",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProtocolListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/protocols/{protocolId}": {
+      "get": {
+        "tags": ["Protocol Management"],
+        "summary": "Get an uploaded protocol",
+        "description": "Get details for a specific uploaded protocol by its ID.",
+        "operationId": "getProtocol",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "protocolId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The protocol's unique identifier"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Protocol details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProtocolResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Protocol not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Protocol Management"],
+        "summary": "Delete an uploaded protocol",
+        "description": "Delete a specific protocol from the robot by its ID.",
+        "operationId": "deleteProtocol",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "protocolId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The protocol's unique identifier"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Protocol deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProtocolResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Protocol not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Protocol is in use by a run",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/protocols/{protocolId}/analyses": {
+      "post": {
+        "tags": ["Protocol Management"],
+        "summary": "Analyze the protocol",
+        "description": "Trigger a new analysis of a protocol with the given runtime parameter values.",
+        "operationId": "analyzeProtocol",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "protocolId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalysisRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Analysis queued or completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisSummaryResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Protocol Management"],
+        "summary": "Get a protocol's analyses",
+        "description": "Get all analyses for a given protocol.",
+        "operationId": "getProtocolAnalyses",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "protocolId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of analyses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/protocols/{protocolId}/analyses/{analysisId}": {
+      "get": {
+        "tags": ["Protocol Management"],
+        "summary": "Get one of a protocol's analyses",
+        "description": "Get the full details of a specific analysis by its ID.",
+        "operationId": "getProtocolAnalysis",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "protocolId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "analysisId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analysis details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProtocolAnalysis"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runs": {
+      "post": {
+        "tags": ["Run Management"],
+        "summary": "Create a run",
+        "description": "Create a new protocol run. A run can be created from an existing protocol or as an empty run for ad-hoc commands.",
+        "operationId": "createRun",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRunRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Run created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Run Management"],
+        "summary": "Get all runs",
+        "description": "Get a list of all runs on the robot.",
+        "operationId": "getRuns",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "pageLength",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            },
+            "description": "Maximum number of runs to return"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of runs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runs/{runId}": {
+      "get": {
+        "tags": ["Run Management"],
+        "summary": "Get a run",
+        "description": "Get the current state of a specific run by its ID.",
+        "operationId": "getRun",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "runId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Run details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Run not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Run Management"],
+        "summary": "Delete a run",
+        "description": "Delete a specific run from the robot.",
+        "operationId": "deleteRun",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "runId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Run deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Run Management"],
+        "summary": "Update a run",
+        "description": "Update properties of an existing run, such as setting it as the current run.",
+        "operationId": "updateRun",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "runId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRunRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Run updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runs/{runId}/actions": {
+      "post": {
+        "tags": ["Run Management"],
+        "summary": "Issue a control action to the run",
+        "description": "Issue a control action such as play, pause, stop, or resume-from-recovery to a run.",
+        "operationId": "createRunAction",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "runId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunActionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Action issued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunActionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runs/{runId}/commands": {
+      "post": {
+        "tags": ["Run Management"],
+        "summary": "Enqueue a command",
+        "description": "Add a command to a run. Commands can be setup, protocol, or fixit commands.",
+        "operationId": "createRunCommand",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "runId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "waitUntilComplete",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "If true, wait for the command to complete before returning"
+          },
+          {
+            "name": "timeout",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Timeout in milliseconds when waitUntilComplete is true"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommandRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Command enqueued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Run Management"],
+        "summary": "Get a list of all protocol commands in the run",
+        "description": "Get a paginated list of all commands in the run, including their current status.",
+        "operationId": "getRunCommands",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "runId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Index to start returning results from"
+          },
+          {
+            "name": "pageLength",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            },
+            "description": "Number of commands to return"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of commands",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runs/{runId}/commands/{commandId}": {
+      "get": {
+        "tags": ["Run Management"],
+        "summary": "Get full details about a specific command in the run",
+        "description": "Get the complete details of a single command in a run by its ID.",
+        "operationId": "getRunCommand",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "runId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commandId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Command details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/commands": {
+      "post": {
+        "tags": ["Simple Commands"],
+        "summary": "Add a command to be executed",
+        "description": "Execute an atomic liquid handling command directly on the robot without needing a run. These stateless commands are executed immediately.",
+        "operationId": "createCommand",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "waitUntilComplete",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "timeout",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommandRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Command created and queued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Simple Commands"],
+        "summary": "Get a list of queued and executed commands",
+        "description": "Get a list of stateless commands that have been issued to the robot.",
+        "operationId": "getCommands",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageLength",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of commands",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/commands/{commandId}": {
+      "get": {
+        "tags": ["Simple Commands"],
+        "summary": "Get a single stateless command",
+        "description": "Get the details of a specific stateless command by its ID.",
+        "operationId": "getCommand",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "commandId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Command details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modules": {
+      "get": {
+        "tags": ["Attached Modules"],
+        "summary": "Get attached modules",
+        "description": "Get a list of all hardware modules currently attached to the robot, including thermocyclers, heater-shakers, temperature modules, magnetic modules, and absorbance plate readers.",
+        "operationId": "getModules",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of attached modules",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/instruments": {
+      "get": {
+        "tags": ["Attached Instruments"],
+        "summary": "Get attached instruments",
+        "description": "Get a list of all instruments (pipettes and gripper) currently attached to the robot.",
+        "operationId": "getInstruments",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "If true, refresh the instrument cache before returning"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of attached instruments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstrumentListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deck_configuration": {
+      "get": {
+        "tags": ["Flex Deck Configuration"],
+        "summary": "Get the Flex deck configuration",
+        "description": "Get the current deck configuration for a Flex robot, including all fixture assignments.",
+        "operationId": "getDeckConfiguration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current deck configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeckConfigurationResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Flex Deck Configuration"],
+        "summary": "Set the Flex deck configuration",
+        "description": "Set a new deck configuration for a Flex robot, assigning fixtures to deck slots.",
+        "operationId": "setDeckConfiguration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeckConfigurationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Deck configuration updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeckConfigurationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/system/time": {
+      "get": {
+        "tags": ["System Control"],
+        "summary": "Fetch system time and date",
+        "description": "Get the current system time and date of the robot.",
+        "operationId": "getSystemTime",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current system time",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemTimeResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["System Control"],
+        "summary": "Set robot time",
+        "description": "Set the system time on the robot.",
+        "operationId": "setSystemTime",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SystemTimeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "System time updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemTimeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/robot/control/estopStatus": {
+      "get": {
+        "tags": ["Robot"],
+        "summary": "Get connected estop status",
+        "description": "Get the current status of the emergency stop (estop) button.",
+        "operationId": "getEstopStatus",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Estop status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstopStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/robot/control/acknowledgeEstopDisengage": {
+      "put": {
+        "tags": ["Robot"],
+        "summary": "Acknowledge and clear an Estop event",
+        "description": "Acknowledge that the estop has been disengaged and clear the estop event, allowing normal operation to resume.",
+        "operationId": "acknowledgeEstopDisengage",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Estop event acknowledged",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstopStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/robot/door/status": {
+      "get": {
+        "tags": ["Robot"],
+        "summary": "Get the status of the robot door",
+        "description": "Get the current open/closed status of the robot door.",
+        "operationId": "getDoorStatus",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OTVersionHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Door status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoorStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "OTVersionHeader": {
+        "name": "Opentrons-Version",
+        "in": "header",
+        "required": true,
+        "description": "The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": ["*"]
+            },
+            {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 4
+            }
+          ]
+        },
+        "example": "*"
+      }
+    },
+    "schemas": {
+      "Health": {
+        "type": "object",
+        "description": "Robot server health information",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The robot's name"
+          },
+          "api_version": {
+            "type": "string",
+            "description": "The version of the robot's Python API"
+          },
+          "fw_version": {
+            "type": "string",
+            "description": "The firmware version of the robot's motor controller"
+          },
+          "board_revision": {
+            "type": "string",
+            "description": "The board revision of the robot"
+          },
+          "system_version": {
+            "type": "string",
+            "description": "The system (OS) version of the robot"
+          },
+          "maximum_protocol_api_version": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "The maximum supported Protocol API version [major, minor]"
+          },
+          "minimum_protocol_api_version": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "The minimum supported Protocol API version [major, minor]"
+          },
+          "robot_model": {
+            "type": "string",
+            "enum": ["OT-2 Standard", "OT-3 Standard"],
+            "description": "The model of the robot"
+          },
+          "links": {
+            "$ref": "#/components/schemas/HealthLinks"
+          },
+          "logs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Available log file paths"
+          },
+          "robot_serial": {
+            "type": "string",
+            "description": "The robot's serial number",
+            "nullable": true
+          }
+        },
+        "required": ["name", "api_version", "fw_version", "system_version", "maximum_protocol_api_version", "minimum_protocol_api_version", "robot_model"]
+      },
+      "HealthLinks": {
+        "type": "object",
+        "description": "Links to related resources on the robot server",
+        "properties": {
+          "apiLog": {
+            "type": "string",
+            "description": "Path to the API log"
+          },
+          "serialLog": {
+            "type": "string",
+            "description": "Path to the serial log"
+          },
+          "serverLog": {
+            "type": "string",
+            "description": "Path to the server log"
+          },
+          "apiSpec": {
+            "type": "string",
+            "description": "Path to the OpenAPI specification"
+          },
+          "systemTime": {
+            "type": "string",
+            "description": "Path to the system time endpoint"
+          }
+        }
+      },
+      "BasicResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "Error response from the API",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ErrorDetail"
+            }
+          }
+        }
+      },
+      "ErrorDetail": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Machine-readable error type identifier"
+          },
+          "title": {
+            "type": "string",
+            "description": "Human-readable error title"
+          },
+          "detail": {
+            "type": "string",
+            "description": "Human-readable error detail"
+          },
+          "errorCode": {
+            "type": "string",
+            "description": "Opentrons error code"
+          }
+        }
+      },
+      "Protocol": {
+        "type": "object",
+        "description": "A protocol uploaded to the robot",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the protocol"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the protocol was uploaded"
+          },
+          "protocolType": {
+            "type": "string",
+            "enum": ["python", "json"],
+            "description": "The type of protocol"
+          },
+          "protocolKind": {
+            "type": "string",
+            "enum": ["standard", "quick-transfer"],
+            "description": "The kind of protocol"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/ProtocolMetadata"
+          },
+          "analysisSummaries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnalysisSummary"
+            }
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProtocolFile"
+            }
+          },
+          "robotType": {
+            "type": "string",
+            "enum": ["OT-2 Standard", "OT-3 Standard"],
+            "nullable": true
+          }
+        },
+        "required": ["id", "createdAt", "protocolType", "protocolKind", "metadata", "analysisSummaries", "files"]
+      },
+      "ProtocolMetadata": {
+        "type": "object",
+        "description": "Metadata extracted from the protocol",
+        "properties": {
+          "protocolName": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "created": {
+            "type": "number"
+          },
+          "lastModified": {
+            "type": "number"
+          },
+          "category": {
+            "type": "string"
+          },
+          "subcategory": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ProtocolFile": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The filename"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["main", "labware", "data"],
+            "description": "The file's role in the protocol"
+          }
+        }
+      },
+      "AnalysisSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "completed"]
+          }
+        }
+      },
+      "ProtocolAnalysis": {
+        "type": "object",
+        "description": "The result of analyzing a protocol",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "completed"]
+          },
+          "result": {
+            "type": "string",
+            "enum": ["ok", "not-ok", "parameter-value-required"],
+            "nullable": true
+          },
+          "pipettes": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "labware": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "modules": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "commands": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "runTimeParameters": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "AnalysisRequest": {
+        "type": "object",
+        "properties": {
+          "runTimeParameterValues": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Runtime parameter values keyed by parameter variable name"
+          },
+          "runTimeParameterFiles": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "CSV file IDs keyed by parameter variable name"
+          },
+          "forceReAnalyze": {
+            "type": "boolean",
+            "default": false,
+            "description": "Force a new analysis even if parameters haven't changed"
+          }
+        }
+      },
+      "ProtocolResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/Protocol"
+          },
+          "links": {
+            "type": "object"
+          }
+        }
+      },
+      "ProtocolListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Protocol"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MultiBodyMeta"
+          }
+        }
+      },
+      "AnalysisSummaryResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/AnalysisSummary"
+          }
+        }
+      },
+      "AnalysisListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProtocolAnalysis"
+            }
+          }
+        }
+      },
+      "Run": {
+        "type": "object",
+        "description": "A protocol run on the robot",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the run"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["idle", "running", "paused", "stop-requested", "stopped", "failed", "succeeded", "finishing"],
+            "description": "The current status of the run"
+          },
+          "current": {
+            "type": "boolean",
+            "description": "Whether this is the current active run"
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RunAction"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "pipettes": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "labware": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "modules": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "protocolId": {
+            "type": "string",
+            "nullable": true,
+            "description": "The ID of the protocol associated with this run"
+          },
+          "runTimeParameters": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": ["id", "createdAt", "status", "current", "actions", "errors", "pipettes", "labware", "modules"]
+      },
+      "CreateRunRequest": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "protocolId": {
+                "type": "string",
+                "description": "The ID of the protocol to run"
+              },
+              "labwareOffsets": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                },
+                "description": "Labware offsets to apply to this run"
+              },
+              "runTimeParameterValues": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Runtime parameter values keyed by variable name"
+              },
+              "runTimeParameterFiles": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "CSV file IDs keyed by parameter variable name"
+              }
+            }
+          }
+        }
+      },
+      "UpdateRunRequest": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "current": {
+                "type": "boolean",
+                "description": "Set this run as the current active run"
+              }
+            }
+          }
+        }
+      },
+      "RunAction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actionType": {
+            "type": "string",
+            "enum": ["play", "pause", "stop", "resume-from-recovery", "resume-from-recovery-assuming-false-positive"]
+          }
+        }
+      },
+      "RunActionRequest": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "actionType": {
+                "type": "string",
+                "enum": ["play", "pause", "stop", "resume-from-recovery", "resume-from-recovery-assuming-false-positive"],
+                "description": "The type of control action to issue"
+              }
+            },
+            "required": ["actionType"]
+          }
+        },
+        "required": ["data"]
+      },
+      "RunActionResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RunAction"
+          }
+        }
+      },
+      "RunResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/Run"
+          },
+          "links": {
+            "type": "object"
+          }
+        }
+      },
+      "RunListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Run"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MultiBodyMeta"
+          },
+          "links": {
+            "type": "object"
+          }
+        }
+      },
+      "CommandRequest": {
+        "type": "object",
+        "description": "A command to execute on the robot",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "commandType": {
+                "type": "string",
+                "description": "The type of command to execute (e.g., 'aspirate', 'dispense', 'pickUpTip')"
+              },
+              "params": {
+                "type": "object",
+                "description": "Command-specific parameters",
+                "additionalProperties": true
+              },
+              "intent": {
+                "type": "string",
+                "enum": ["setup", "protocol", "fixit"],
+                "description": "The intent of the command"
+              },
+              "key": {
+                "type": "string",
+                "description": "Optional key to identify this command for error recovery"
+              }
+            },
+            "required": ["commandType", "params"]
+          }
+        },
+        "required": ["data"]
+      },
+      "Command": {
+        "type": "object",
+        "description": "A command that was executed or is queued",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "commandType": {
+            "type": "string"
+          },
+          "params": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "result": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": true
+          },
+          "status": {
+            "type": "string",
+            "enum": ["queued", "running", "succeeded", "failed"]
+          },
+          "error": {
+            "type": "object",
+            "nullable": true
+          },
+          "intent": {
+            "type": "string",
+            "enum": ["setup", "protocol", "fixit"]
+          },
+          "key": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CommandResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/Command"
+          }
+        }
+      },
+      "CommandListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Command"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MultiBodyMeta"
+          },
+          "links": {
+            "type": "object"
+          }
+        }
+      },
+      "Module": {
+        "type": "object",
+        "description": "A hardware module attached to the robot",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "serialNumber": {
+            "type": "string"
+          },
+          "firmwareVersion": {
+            "type": "string"
+          },
+          "hardwareRevision": {
+            "type": "string"
+          },
+          "hasAvailableUpdate": {
+            "type": "boolean"
+          },
+          "moduleType": {
+            "type": "string",
+            "enum": ["thermocyclerModuleType", "temperatureModuleType", "magneticModuleType", "heaterShakerModuleType", "magneticBlockType", "absorbanceReaderType", "flexStackerModuleType"]
+          },
+          "moduleModel": {
+            "type": "string"
+          },
+          "slotName": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "description": "Module-specific status data",
+            "additionalProperties": true
+          },
+          "usbPort": {
+            "type": "object",
+            "properties": {
+              "port": {
+                "type": "integer"
+              },
+              "portGroup": {
+                "type": "string"
+              },
+              "hubPort": {
+                "type": "integer",
+                "nullable": true
+              },
+              "path": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ModuleListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Module"
+            }
+          }
+        }
+      },
+      "Instrument": {
+        "type": "object",
+        "description": "A pipette or gripper attached to the robot",
+        "properties": {
+          "mount": {
+            "type": "string",
+            "enum": ["left", "right", "extension"],
+            "description": "The mount position of the instrument"
+          },
+          "instrumentType": {
+            "type": "string",
+            "enum": ["pipette", "gripper"]
+          },
+          "instrumentModel": {
+            "type": "string"
+          },
+          "serialNumber": {
+            "type": "string"
+          },
+          "subsystems": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "InstrumentListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Instrument"
+            }
+          }
+        }
+      },
+      "DeckConfigurationRequest": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "cutoutFixtures": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CutoutFixture"
+                }
+              }
+            }
+          }
+        }
+      },
+      "DeckConfigurationResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "cutoutFixtures": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CutoutFixture"
+                }
+              },
+              "lastModifiedAt": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              }
+            }
+          }
+        }
+      },
+      "CutoutFixture": {
+        "type": "object",
+        "description": "A fixture assigned to a deck cutout on the Flex",
+        "properties": {
+          "cutoutId": {
+            "type": "string",
+            "description": "The deck cutout identifier (e.g., 'cutoutA1')"
+          },
+          "cutoutFixtureId": {
+            "type": "string",
+            "description": "The fixture type identifier"
+          },
+          "opentronsModuleSerialNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "Serial number of the module in this slot, if any"
+          }
+        },
+        "required": ["cutoutId", "cutoutFixtureId"]
+      },
+      "SystemTimeResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "systemTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The current system time in ISO 8601 format"
+              }
+            }
+          }
+        }
+      },
+      "SystemTimeRequest": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "systemTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The time to set on the robot"
+              }
+            },
+            "required": ["systemTime"]
+          }
+        }
+      },
+      "EstopStatusResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": ["physicallyEngaged", "logicallyEngaged", "disengaged", "notPresent"],
+                "description": "The current estop status"
+              },
+              "leftEstopPhysicalStatus": {
+                "type": "string",
+                "enum": ["engaged", "disengaged", "notPresent"],
+                "nullable": true
+              },
+              "rightEstopPhysicalStatus": {
+                "type": "string",
+                "enum": ["engaged", "disengaged", "notPresent"],
+                "nullable": true
+              }
+            }
+          }
+        }
+      },
+      "DoorStatusResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": ["open", "closed"],
+                "description": "The current door status"
+              },
+              "doorRequiredClosedForProtocol": {
+                "type": "boolean",
+                "description": "Whether the door must be closed to run a protocol"
+              }
+            }
+          }
+        }
+      },
+      "MultiBodyMeta": {
+        "type": "object",
+        "description": "Pagination metadata for multi-item responses",
+        "properties": {
+          "cursor": {
+            "type": "integer",
+            "description": "The index of the first item in this page"
+          },
+          "totalLength": {
+            "type": "integer",
+            "description": "The total number of items available"
+          }
+        }
+      }
+    }
+  }
+}

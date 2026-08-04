@@ -1,0 +1,30 @@
+{
+  "provider": "opentrons",
+  "sources": [
+    "opentrons-attached-instruments-api-openapi.yml",
+    "opentrons-attached-modules-api-openapi.yml",
+    "opentrons-flex-deck-configuration-api-openapi.yml",
+    "opentrons-health-api-openapi.yml",
+    "opentrons-protocol-management-api-openapi.yml",
+    "opentrons-robot-api-openapi.yml",
+    "opentrons-run-management-api-openapi.yml",
+    "opentrons-simple-commands-api-openapi.yml",
+    "opentrons-system-control-api-openapi.yml"
+  ],
+  "outputs": [
+    "opentrons-attached-instruments-api-openapi.yml",
+    "opentrons-attached-modules-api-openapi.yml",
+    "opentrons-flex-deck-configuration-api-openapi.yml",
+    "opentrons-health-api-openapi.yml",
+    "opentrons-protocol-management-api-openapi.yml",
+    "opentrons-robot-api-openapi.yml",
+    "opentrons-run-management-api-openapi.yml",
+    "opentrons-simple-commands-api-openapi.yml",
+    "opentrons-system-control-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
