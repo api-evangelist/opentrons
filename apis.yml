@@ -225,6 +225,9 @@ apis:
   - type: IntegrationTools
     url: https://github.com/Opentrons/opentrons-integration-tools
 common:
+  - type: License
+    name: Apache-2.0
+    url: https://github.com/Opentrons/opentrons/blob/edge/LICENSE
   - type: AgenticAccess
     url: agentic-access/opentrons-agentic-access.yml
   - type: DomainSecurity
