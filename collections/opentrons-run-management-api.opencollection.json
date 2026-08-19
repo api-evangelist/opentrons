@@ -1,0 +1,273 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Opentrons HTTP Attached Instruments Run Management API",
+    "version": "4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Run Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/runs",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "pageLength",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of runs to return"
+              }
+            ]
+          },
+          "docs": "Get a list of all runs on the robot."
+        },
+        {
+          "info": {
+            "name": "Create a run",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{robotIP}:31950/runs",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new protocol run. A run can be created from an existing protocol or as an empty run for ad-hoc commands."
+        },
+        {
+          "info": {
+            "name": "Get a run",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/runs/:runId",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the current state of a specific run by its ID."
+        },
+        {
+          "info": {
+            "name": "Update a run",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://{robotIP}:31950/runs/:runId",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update properties of an existing run, such as setting it as the current run."
+        },
+        {
+          "info": {
+            "name": "Delete a run",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{robotIP}:31950/runs/:runId",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a specific run from the robot."
+        },
+        {
+          "info": {
+            "name": "Issue a control action to the run",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{robotIP}:31950/runs/:runId/actions",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Issue a control action such as play, pause, stop, or resume-from-recovery to a run."
+        },
+        {
+          "info": {
+            "name": "Get a list of all protocol commands in the run",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/runs/:runId/commands",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Index to start returning results from"
+              },
+              {
+                "name": "pageLength",
+                "value": "",
+                "type": "query",
+                "description": "Number of commands to return"
+              }
+            ]
+          },
+          "docs": "Get a paginated list of all commands in the run, including their current status."
+        },
+        {
+          "info": {
+            "name": "Enqueue a command",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{robotIP}:31950/runs/:runId/commands",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "waitUntilComplete",
+                "value": "",
+                "type": "query",
+                "description": "If true, wait for the command to complete before returning"
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "Timeout in milliseconds when waitUntilComplete is true"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a command to a run. Commands can be setup, protocol, or fixit commands."
+        },
+        {
+          "info": {
+            "name": "Get full details about a specific command in the run",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/runs/:runId/commands/:commandId",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "commandId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the complete details of a single command in a run by its ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

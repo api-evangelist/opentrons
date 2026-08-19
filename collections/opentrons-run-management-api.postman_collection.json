@@ -1,0 +1,1237 @@
+{
+  "item": [
+    {
+      "id": "ee7816f6-5d59-4085-bb02-13e7e5f82943",
+      "name": "Run Management",
+      "description": {
+        "content": "Create and control protocol runs",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1e8e6616-8c04-42ed-90c4-d3a1d11e70fa",
+          "name": "Create a run",
+          "request": {
+            "name": "Create a run",
+            "description": {
+              "content": "Create a new protocol run. A run can be created from an existing protocol or as an empty run for ad-hoc commands.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "runs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"protocolId\": \"<string>\",\n    \"labwareOffsets\": [\n      \"<object>\",\n      \"<object>\"\n    ],\n    \"runTimeParameterValues\": {\n      \"key_0\": true,\n      \"key_1\": 1521\n    },\n    \"runTimeParameterFiles\": {\n      \"key_0\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b1d53726-d9eb-4709-b1b1-d2a9f7a1b21a",
+              "name": "Run created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"protocolId\": \"<string>\",\n    \"labwareOffsets\": [\n      \"<object>\",\n      \"<object>\"\n    ],\n    \"runTimeParameterValues\": {\n      \"key_0\": false\n    },\n    \"runTimeParameterFiles\": {\n      \"key_0\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"createdAt\": \"1991-10-15T14:19:04.563Z\",\n    \"status\": \"failed\",\n    \"current\": false,\n    \"actions\": [\n      {\n        \"id\": \"string\",\n        \"createdAt\": \"1951-04-03T17:11:46.014Z\",\n        \"actionType\": \"resume-from-recovery-assuming-false-positive\"\n      },\n      {\n        \"id\": \"string\",\n        \"createdAt\": \"1993-11-26T16:45:43.693Z\",\n        \"actionType\": \"pause\"\n      }\n    ],\n    \"errors\": [],\n    \"pipettes\": [],\n    \"labware\": [],\n    \"modules\": [],\n    \"protocolId\": \"string\"\n  },\n  \"links\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cca911e1-65ca-4b1c-adc6-f9be82edf62c",
+          "name": "Get all runs",
+          "request": {
+            "name": "Get all runs",
+            "description": {
+              "content": "Get a list of all runs on the robot.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "runs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageLength",
+                  "value": "20",
+                  "description": "Maximum number of runs to return"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "60b41098-5742-4cae-b183-4fbe4f935727",
+              "name": "List of runs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageLength",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"createdAt\": \"1953-11-28T15:03:35.933Z\",\n      \"status\": \"stop-requested\",\n      \"current\": false,\n      \"actions\": [\n        {\n          \"id\": \"string\",\n          \"createdAt\": \"1955-02-05T18:24:07.669Z\",\n          \"actionType\": \"play\"\n        },\n        {\n          \"id\": \"string\",\n          \"createdAt\": \"2014-07-15T01:54:26.099Z\",\n          \"actionType\": \"play\"\n        }\n      ],\n      \"errors\": [],\n      \"pipettes\": [],\n      \"labware\": [],\n      \"modules\": [],\n      \"protocolId\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"createdAt\": \"1992-10-30T11:16:45.277Z\",\n      \"status\": \"stopped\",\n      \"current\": false,\n      \"actions\": [\n        {\n          \"id\": \"string\",\n          \"createdAt\": \"1981-04-16T23:31:39.960Z\",\n          \"actionType\": \"pause\"\n        },\n        {\n          \"id\": \"string\",\n          \"createdAt\": \"1995-11-22T03:04:02.284Z\",\n          \"actionType\": \"resume-from-recovery\"\n        }\n      ],\n      \"errors\": [],\n      \"pipettes\": [],\n      \"labware\": [],\n      \"modules\": [],\n      \"protocolId\": \"string\"\n    }\n  ],\n  \"meta\": {\n    \"cursor\": 9938,\n    \"totalLength\": 4157\n  },\n  \"links\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2dcc9e0d-f2eb-4157-8168-d0ed75c08d32",
+          "name": "Get a run",
+          "request": {
+            "name": "Get a run",
+            "description": {
+              "content": "Get the current state of a specific run by its ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "runs",
+                ":runId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "runId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b13a886b-87cb-42bc-935a-bce9a92ba75b",
+              "name": "Run details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    ":runId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "runId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"createdAt\": \"1991-10-15T14:19:04.563Z\",\n    \"status\": \"failed\",\n    \"current\": false,\n    \"actions\": [\n      {\n        \"id\": \"string\",\n        \"createdAt\": \"1951-04-03T17:11:46.014Z\",\n        \"actionType\": \"resume-from-recovery-assuming-false-positive\"\n      },\n      {\n        \"id\": \"string\",\n        \"createdAt\": \"1993-11-26T16:45:43.693Z\",\n        \"actionType\": \"pause\"\n      }\n    ],\n    \"errors\": [],\n    \"pipettes\": [],\n    \"labware\": [],\n    \"modules\": [],\n    \"protocolId\": \"string\"\n  },\n  \"links\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22a5b204-87cd-4839-86f4-2b4a6116ad25",
+              "name": "Run not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    ":runId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "runId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"detail\": \"string\",\n      \"errorCode\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"detail\": \"string\",\n      \"errorCode\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "339aeed7-adf8-45a7-867a-28cb55d84bf3",
+          "name": "Delete a run",
+          "request": {
+            "name": "Delete a run",
+            "description": {
+              "content": "Delete a specific run from the robot.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "runs",
+                ":runId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "runId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e3088486-1b7b-4df2-ae97-3fbbf55f19a1",
+              "name": "Run deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    ":runId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "runId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"createdAt\": \"1991-10-15T14:19:04.563Z\",\n    \"status\": \"failed\",\n    \"current\": false,\n    \"actions\": [\n      {\n        \"id\": \"string\",\n        \"createdAt\": \"1951-04-03T17:11:46.014Z\",\n        \"actionType\": \"resume-from-recovery-assuming-false-positive\"\n      },\n      {\n        \"id\": \"string\",\n        \"createdAt\": \"1993-11-26T16:45:43.693Z\",\n        \"actionType\": \"pause\"\n      }\n    ],\n    \"errors\": [],\n    \"pipettes\": [],\n    \"labware\": [],\n    \"modules\": [],\n    \"protocolId\": \"string\"\n  },\n  \"links\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "94c17f64-ce3f-4a51-91eb-7bb93916fc34",
+          "name": "Update a run",
+          "request": {
+            "name": "Update a run",
+            "description": {
+              "content": "Update properties of an existing run, such as setting it as the current run.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "runs",
+                ":runId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "runId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"current\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "61a90396-9269-4b01-8db3-74051cbc9f69",
+              "name": "Run updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    ":runId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "runId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"current\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"createdAt\": \"1991-10-15T14:19:04.563Z\",\n    \"status\": \"failed\",\n    \"current\": false,\n    \"actions\": [\n      {\n        \"id\": \"string\",\n        \"createdAt\": \"1951-04-03T17:11:46.014Z\",\n        \"actionType\": \"resume-from-recovery-assuming-false-positive\"\n      },\n      {\n        \"id\": \"string\",\n        \"createdAt\": \"1993-11-26T16:45:43.693Z\",\n        \"actionType\": \"pause\"\n      }\n    ],\n    \"errors\": [],\n    \"pipettes\": [],\n    \"labware\": [],\n    \"modules\": [],\n    \"protocolId\": \"string\"\n  },\n  \"links\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5acc9dee-f5ba-4a83-9800-67cac68f787e",
+          "name": "Issue a control action to the run",
+          "request": {
+            "name": "Issue a control action to the run",
+            "description": {
+              "content": "Issue a control action such as play, pause, stop, or resume-from-recovery to a run.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "runs",
+                ":runId",
+                "actions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "runId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"actionType\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "da66ffb2-7bde-478c-9347-7c926c180c3a",
+              "name": "Action issued",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    ":runId",
+                    "actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "runId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"actionType\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"createdAt\": \"1957-04-27T10:24:53.321Z\",\n    \"actionType\": \"resume-from-recovery\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e7e692b0-470b-445c-800b-59e4edb25b2d",
+          "name": "Enqueue a command",
+          "request": {
+            "name": "Enqueue a command",
+            "description": {
+              "content": "Add a command to a run. Commands can be setup, protocol, or fixit commands.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "runs",
+                ":runId",
+                "commands"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "waitUntilComplete",
+                  "value": "false",
+                  "description": "If true, wait for the command to complete before returning"
+                },
+                {
+                  "disabled": false,
+                  "key": "timeout",
+                  "value": "<integer>",
+                  "description": "Timeout in milliseconds when waitUntilComplete is true"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "runId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"commandType\": \"<string>\",\n    \"params\": {\n      \"key_0\": true,\n      \"key_1\": true\n    },\n    \"intent\": \"<string>\",\n    \"key\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e313e2d5-8c52-43a3-bbb4-7ca0e55602fb",
+              "name": "Command enqueued",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    ":runId",
+                    "commands"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "waitUntilComplete",
+                      "value": "false"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "runId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"commandType\": \"<string>\",\n    \"params\": {\n      \"key_0\": 1793.7788443945635\n    },\n    \"intent\": \"<string>\",\n    \"key\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"createdAt\": \"1967-12-03T18:01:47.586Z\",\n    \"startedAt\": \"2020-06-16T01:47:08.943Z\",\n    \"completedAt\": \"1972-01-27T08:41:45.886Z\",\n    \"commandType\": \"string\",\n    \"params\": {\n      \"key_0\": 7515,\n      \"key_1\": false\n    },\n    \"result\": {\n      \"key_0\": \"string\",\n      \"key_1\": 3085,\n      \"key_2\": 7914.981769061094\n    },\n    \"status\": \"queued\",\n    \"error\": {},\n    \"intent\": \"protocol\",\n    \"key\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e947c0e-9cf3-4e69-a8d5-ee3eec799b76",
+          "name": "Get a list of all protocol commands in the run",
+          "request": {
+            "name": "Get a list of all protocol commands in the run",
+            "description": {
+              "content": "Get a paginated list of all commands in the run, including their current status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "runs",
+                ":runId",
+                "commands"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<integer>",
+                  "description": "Index to start returning results from"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageLength",
+                  "value": "20",
+                  "description": "Number of commands to return"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "runId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fbf91ada-0c3e-40d5-a2a1-18c07b24c439",
+              "name": "List of commands",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    ":runId",
+                    "commands"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageLength",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "runId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"createdAt\": \"1987-04-19T13:54:38.378Z\",\n      \"startedAt\": \"1976-09-04T00:02:54.040Z\",\n      \"completedAt\": \"2013-09-26T11:36:31.232Z\",\n      \"commandType\": \"string\",\n      \"params\": {\n        \"key_0\": 2573,\n        \"key_1\": \"string\",\n        \"key_2\": 3528.6104152755593,\n        \"key_3\": false\n      },\n      \"result\": {\n        \"key_0\": false\n      },\n      \"status\": \"failed\",\n      \"error\": {},\n      \"intent\": \"fixit\",\n      \"key\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"createdAt\": \"1995-05-05T04:31:07.318Z\",\n      \"startedAt\": \"1959-06-18T01:13:14.414Z\",\n      \"completedAt\": \"2002-12-07T11:04:00.721Z\",\n      \"commandType\": \"string\",\n      \"params\": {\n        \"key_0\": false\n      },\n      \"result\": {\n        \"key_0\": \"string\",\n        \"key_1\": 8797.067488588762\n      },\n      \"status\": \"succeeded\",\n      \"error\": {},\n      \"intent\": \"protocol\",\n      \"key\": \"string\"\n    }\n  ],\n  \"meta\": {\n    \"cursor\": 4984,\n    \"totalLength\": 3581\n  },\n  \"links\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7a2b1317-2857-47b2-a497-f91e842742de",
+          "name": "Get full details about a specific command in the run",
+          "request": {
+            "name": "Get full details about a specific command in the run",
+            "description": {
+              "content": "Get the complete details of a single command in a run by its ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "runs",
+                ":runId",
+                "commands",
+                ":commandId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "runId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "commandId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "25f6d2c8-f739-4f0d-b53b-53ad0710688b",
+              "name": "Command details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runs",
+                    ":runId",
+                    "commands",
+                    ":commandId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "runId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commandId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"createdAt\": \"1967-12-03T18:01:47.586Z\",\n    \"startedAt\": \"2020-06-16T01:47:08.943Z\",\n    \"completedAt\": \"1972-01-27T08:41:45.886Z\",\n    \"commandType\": \"string\",\n    \"params\": {\n      \"key_0\": 7515,\n      \"key_1\": false\n    },\n    \"result\": {\n      \"key_0\": \"string\",\n      \"key_1\": 3085,\n      \"key_2\": 7914.981769061094\n    },\n    \"status\": \"queued\",\n    \"error\": {},\n    \"intent\": \"protocol\",\n    \"key\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The IP address of the Opentrons robot on the local network",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.1.100",
+      "key": "robotIP"
+    },
+    {
+      "type": "string",
+      "value": "http://{{robotIP}}:31950",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e03fb675-eae6-486f-9dda-a47cba2e8c77",
+    "name": "Opentrons HTTP Attached Instruments Run Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot at /openapi.json.\n\nContact Support:\n Name: Opentrons Support\n Email: support@opentrons.com",
+      "type": "text/plain"
+    }
+  }
+}

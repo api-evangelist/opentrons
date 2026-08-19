@@ -1,0 +1,406 @@
+{
+  "item": [
+    {
+      "id": "272979d9-e385-4ab5-aa44-529716ff1c22",
+      "name": "Simple Commands",
+      "description": {
+        "content": "Stateless atomic liquid handling commands",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9eaac152-c201-4177-b58f-28a4925b1bbc",
+          "name": "Add a command to be executed",
+          "request": {
+            "name": "Add a command to be executed",
+            "description": {
+              "content": "Execute an atomic liquid handling command directly on the robot without needing a run. These stateless commands are executed immediately.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "commands"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "waitUntilComplete",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "timeout",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"commandType\": \"<string>\",\n    \"params\": {\n      \"key_0\": 8761.085263701436,\n      \"key_1\": 7690.08841051108,\n      \"key_2\": \"string\"\n    },\n    \"intent\": \"<string>\",\n    \"key\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "566b98e0-fb86-40c9-8b5c-bdec9c3059b1",
+              "name": "Command created and queued",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "commands"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "waitUntilComplete",
+                      "value": "false"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"commandType\": \"<string>\",\n    \"params\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": 4435\n    },\n    \"intent\": \"<string>\",\n    \"key\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"createdAt\": \"2025-12-02T22:09:02.393Z\",\n    \"startedAt\": \"2009-03-18T06:59:41.817Z\",\n    \"completedAt\": \"1970-09-04T17:10:47.299Z\",\n    \"commandType\": \"string\",\n    \"params\": {\n      \"key_0\": \"string\",\n      \"key_1\": 5279\n    },\n    \"result\": {\n      \"key_0\": false\n    },\n    \"status\": \"queued\",\n    \"error\": {},\n    \"intent\": \"fixit\",\n    \"key\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5220ea77-5b22-4319-a03a-4a53cf3fba85",
+          "name": "Get a list of queued and executed commands",
+          "request": {
+            "name": "Get a list of queued and executed commands",
+            "description": {
+              "content": "Get a list of stateless commands that have been issued to the robot.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "commands"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageLength",
+                  "value": "20"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2670aa09-2c63-46c4-abbe-1fbc23209ab6",
+              "name": "List of commands",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "commands"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageLength",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"createdAt\": \"1951-04-08T11:48:58.599Z\",\n      \"startedAt\": \"2002-06-29T14:20:28.392Z\",\n      \"completedAt\": \"1994-04-05T06:34:37.735Z\",\n      \"commandType\": \"string\",\n      \"params\": {\n        \"key_0\": \"string\"\n      },\n      \"result\": {\n        \"key_0\": 6730.059010705376,\n        \"key_1\": \"string\",\n        \"key_2\": false,\n        \"key_3\": \"string\"\n      },\n      \"status\": \"succeeded\",\n      \"error\": {},\n      \"intent\": \"setup\",\n      \"key\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"createdAt\": \"2013-04-08T14:47:28.825Z\",\n      \"startedAt\": \"1948-01-06T22:55:55.290Z\",\n      \"completedAt\": \"1985-06-03T03:24:48.911Z\",\n      \"commandType\": \"string\",\n      \"params\": {\n        \"key_0\": 3803,\n        \"key_1\": 5879.235459583494,\n        \"key_2\": false\n      },\n      \"result\": {\n        \"key_0\": 6876\n      },\n      \"status\": \"succeeded\",\n      \"error\": {},\n      \"intent\": \"setup\",\n      \"key\": \"string\"\n    }\n  ],\n  \"meta\": {\n    \"cursor\": 75,\n    \"totalLength\": 2617\n  },\n  \"links\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6eaf2544-e03c-469a-a39a-7805c17edd23",
+          "name": "Get a single stateless command",
+          "request": {
+            "name": "Get a single stateless command",
+            "description": {
+              "content": "Get the details of a specific stateless command by its ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "commands",
+                ":commandId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "commandId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2bb089bd-86df-4508-92ab-a25c1984fd6b",
+              "name": "Command details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "commands",
+                    ":commandId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commandId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"createdAt\": \"2025-12-02T22:09:02.393Z\",\n    \"startedAt\": \"2009-03-18T06:59:41.817Z\",\n    \"completedAt\": \"1970-09-04T17:10:47.299Z\",\n    \"commandType\": \"string\",\n    \"params\": {\n      \"key_0\": \"string\",\n      \"key_1\": 5279\n    },\n    \"result\": {\n      \"key_0\": false\n    },\n    \"status\": \"queued\",\n    \"error\": {},\n    \"intent\": \"fixit\",\n    \"key\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The IP address of the Opentrons robot on the local network",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.1.100",
+      "key": "robotIP"
+    },
+    {
+      "type": "string",
+      "value": "http://{{robotIP}}:31950",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fa7658c0-890e-40ff-b817-c2eddebb2c34",
+    "name": "Opentrons HTTP Attached Instruments Simple Commands API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot at /openapi.json.\n\nContact Support:\n Name: Opentrons Support\n Email: support@opentrons.com",
+      "type": "text/plain"
+    }
+  }
+}

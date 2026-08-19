@@ -1,0 +1,167 @@
+{
+  "item": [
+    {
+      "id": "7cfaca2b-35ae-41f8-a348-252059ba0beb",
+      "name": "Health",
+      "description": {
+        "content": "Robot server health and status endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "693c1963-8771-4ea8-9f2d-e232d64156be",
+          "name": "Get server health",
+          "request": {
+            "name": "Get server health",
+            "description": {
+              "content": "Get information about the health of the robot server. Use the health endpoint to check that the robot server is running and ready to operate. A 200 OK response means the server is running. The response includes information about the software and system.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "634ceee6-c0f5-42fc-9396-b95b1eb62efd",
+              "name": "Robot server is healthy and ready",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"api_version\": \"string\",\n  \"fw_version\": \"string\",\n  \"system_version\": \"string\",\n  \"maximum_protocol_api_version\": [\n    6929,\n    4930\n  ],\n  \"minimum_protocol_api_version\": [\n    1104,\n    2449\n  ],\n  \"robot_model\": \"OT-3 Standard\",\n  \"board_revision\": \"string\",\n  \"links\": {\n    \"apiLog\": \"string\",\n    \"serialLog\": \"string\",\n    \"serverLog\": \"string\",\n    \"apiSpec\": \"string\",\n    \"systemTime\": \"string\"\n  },\n  \"logs\": [\n    \"string\",\n    \"string\"\n  ],\n  \"robot_serial\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce8ffd50-f991-4849-9cbf-44d34916703e",
+              "name": "Robot motor controller is not ready",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The IP address of the Opentrons robot on the local network",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.1.100",
+      "key": "robotIP"
+    },
+    {
+      "type": "string",
+      "value": "http://{{robotIP}}:31950",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2c70707e-d7c0-4d0e-9cd5-cfebb2b6adb7",
+    "name": "Opentrons HTTP Attached Instruments Health API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot at /openapi.json.\n\nContact Support:\n Name: Opentrons Support\n Email: support@opentrons.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,258 @@
+{
+  "item": [
+    {
+      "id": "539185d6-733a-44a9-87a1-a08295c91511",
+      "name": "System Control",
+      "description": {
+        "content": "System time and robot control",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ba2aaa11-2255-42ed-9e2a-102c94fd019e",
+          "name": "Fetch system time and date",
+          "request": {
+            "name": "Fetch system time and date",
+            "description": {
+              "content": "Get the current system time and date of the robot.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "system",
+                "time"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f3da66a0-6a60-49a3-ab9c-a5eb597f95d5",
+              "name": "Current system time",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "system",
+                    "time"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"systemTime\": \"2009-09-21T01:07:58.778Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bec868e3-8702-4b55-a3f0-7437a9b0b4fb",
+          "name": "Set robot time",
+          "request": {
+            "name": "Set robot time",
+            "description": {
+              "content": "Set the system time on the robot.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "system",
+                "time"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"systemTime\": \"<dateTime>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2761e321-52c5-4a27-822c-f8faa11a8370",
+              "name": "System time updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "system",
+                    "time"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"systemTime\": \"<dateTime>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"systemTime\": \"2009-09-21T01:07:58.778Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The IP address of the Opentrons robot on the local network",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.1.100",
+      "key": "robotIP"
+    },
+    {
+      "type": "string",
+      "value": "http://{{robotIP}}:31950",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b9ae3c8d-cb53-4352-a529-42031ef28292",
+    "name": "Opentrons HTTP Attached Instruments System Control API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot at /openapi.json.\n\nContact Support:\n Name: Opentrons Support\n Email: support@opentrons.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,254 @@
+{
+  "item": [
+    {
+      "id": "cb53bdc8-452e-4bc6-8b88-5f05cfcbde89",
+      "name": "Flex Deck Configuration",
+      "description": {
+        "content": "Configure the Flex robot deck",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "530ffd6c-e725-4493-a4fc-402d2e1a07e4",
+          "name": "Get the Flex deck configuration",
+          "request": {
+            "name": "Get the Flex deck configuration",
+            "description": {
+              "content": "Get the current deck configuration for a Flex robot, including all fixture assignments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deck_configuration"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ee434a43-eafa-480f-8121-ee09b5ecc5c2",
+              "name": "Current deck configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deck_configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"cutoutFixtures\": [\n      {\n        \"cutoutId\": \"string\",\n        \"cutoutFixtureId\": \"string\",\n        \"opentronsModuleSerialNumber\": \"string\"\n      },\n      {\n        \"cutoutId\": \"string\",\n        \"cutoutFixtureId\": \"string\",\n        \"opentronsModuleSerialNumber\": \"string\"\n      }\n    ],\n    \"lastModifiedAt\": \"1976-04-10T21:10:34.296Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "04888211-6a74-4830-b73f-09874e329f6b",
+          "name": "Set the Flex deck configuration",
+          "request": {
+            "name": "Set the Flex deck configuration",
+            "description": {
+              "content": "Set a new deck configuration for a Flex robot, assigning fixtures to deck slots.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deck_configuration"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"cutoutFixtures\": [\n      {\n        \"cutoutId\": \"<string>\",\n        \"cutoutFixtureId\": \"<string>\",\n        \"opentronsModuleSerialNumber\": \"<string>\"\n      },\n      {\n        \"cutoutId\": \"<string>\",\n        \"cutoutFixtureId\": \"<string>\",\n        \"opentronsModuleSerialNumber\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c0d5f013-dd33-4c68-a294-d5cdc57e14ba",
+              "name": "Deck configuration updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deck_configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"cutoutFixtures\": [\n      {\n        \"cutoutId\": \"string\",\n        \"cutoutFixtureId\": \"string\",\n        \"opentronsModuleSerialNumber\": \"string\"\n      },\n      {\n        \"cutoutId\": \"string\",\n        \"cutoutFixtureId\": \"string\",\n        \"opentronsModuleSerialNumber\": \"string\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"cutoutFixtures\": [\n      {\n        \"cutoutId\": \"string\",\n        \"cutoutFixtureId\": \"string\",\n        \"opentronsModuleSerialNumber\": \"string\"\n      },\n      {\n        \"cutoutId\": \"string\",\n        \"cutoutFixtureId\": \"string\",\n        \"opentronsModuleSerialNumber\": \"string\"\n      }\n    ],\n    \"lastModifiedAt\": \"1976-04-10T21:10:34.296Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The IP address of the Opentrons robot on the local network",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.1.100",
+      "key": "robotIP"
+    },
+    {
+      "type": "string",
+      "value": "http://{{robotIP}}:31950",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "da872b71-e20b-4b21-afc3-be526ef2c028",
+    "name": "Opentrons HTTP Attached Instruments Flex Deck Configuration API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot at /openapi.json.\n\nContact Support:\n Name: Opentrons Support\n Email: support@opentrons.com",
+      "type": "text/plain"
+    }
+  }
+}

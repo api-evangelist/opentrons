@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Opentrons HTTP Attached Instruments System Control API",
+    "version": "4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "System Control",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch system time and date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/system/time",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ]
+          },
+          "docs": "Get the current system time and date of the robot."
+        },
+        {
+          "info": {
+            "name": "Set robot time",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{robotIP}:31950/system/time",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the system time on the robot."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

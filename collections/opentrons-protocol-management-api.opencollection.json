@@ -1,0 +1,216 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Opentrons HTTP Attached Instruments Protocol Management API",
+    "version": "4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Protocol Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get uploaded protocols",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/protocols",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "protocolKind",
+                "value": "",
+                "type": "query",
+                "description": "Filter by protocol kind"
+              }
+            ]
+          },
+          "docs": "Get a list of all protocols that have been uploaded to the robot."
+        },
+        {
+          "info": {
+            "name": "Upload a protocol",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{robotIP}:31950/protocols",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "files",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "runTimeParameterValues",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "runTimeParameterFiles",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "protocolKind",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a new protocol file (Python or JSON) to the robot. The protocol will be analyzed after upload."
+        },
+        {
+          "info": {
+            "name": "Get an uploaded protocol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/protocols/:protocolId",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "protocolId",
+                "value": "",
+                "type": "path",
+                "description": "The protocol's unique identifier"
+              }
+            ]
+          },
+          "docs": "Get details for a specific uploaded protocol by its ID."
+        },
+        {
+          "info": {
+            "name": "Delete an uploaded protocol",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{robotIP}:31950/protocols/:protocolId",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "protocolId",
+                "value": "",
+                "type": "path",
+                "description": "The protocol's unique identifier"
+              }
+            ]
+          },
+          "docs": "Delete a specific protocol from the robot by its ID."
+        },
+        {
+          "info": {
+            "name": "Get a protocol's analyses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/protocols/:protocolId/analyses",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "protocolId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get all analyses for a given protocol."
+        },
+        {
+          "info": {
+            "name": "Analyze the protocol",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{robotIP}:31950/protocols/:protocolId/analyses",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "protocolId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Trigger a new analysis of a protocol with the given runtime parameter values."
+        },
+        {
+          "info": {
+            "name": "Get one of a protocol's analyses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/protocols/:protocolId/analyses/:analysisId",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "protocolId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "analysisId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the full details of a specific analysis by its ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

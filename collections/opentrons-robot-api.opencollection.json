@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Opentrons HTTP Attached Instruments Robot API",
+    "version": "4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Robot",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get connected estop status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/robot/control/estopStatus",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ]
+          },
+          "docs": "Get the current status of the emergency stop (estop) button."
+        },
+        {
+          "info": {
+            "name": "Acknowledge and clear an Estop event",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{robotIP}:31950/robot/control/acknowledgeEstopDisengage",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ]
+          },
+          "docs": "Acknowledge that the estop has been disengaged and clear the estop event, allowing normal operation to resume."
+        },
+        {
+          "info": {
+            "name": "Get the status of the robot door",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/robot/door/status",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ]
+          },
+          "docs": "Get the current open/closed status of the robot door."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

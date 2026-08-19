@@ -1,0 +1,149 @@
+{
+  "item": [
+    {
+      "id": "5dfbb19a-25e2-4bb7-bef8-62ee1932f204",
+      "name": "Attached Instruments",
+      "description": {
+        "content": "Query attached pipettes and grippers",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8b4c9d4c-98a6-4ea4-a9b6-443fd0009f77",
+          "name": "Get attached instruments",
+          "request": {
+            "name": "Get attached instruments",
+            "description": {
+              "content": "Get a list of all instruments (pipettes and gripper) currently attached to the robot.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "instruments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "refresh",
+                  "value": "false",
+                  "description": "If true, refresh the instrument cache before returning"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93523504-5027-474d-8334-ada078a26cca",
+              "name": "List of attached instruments",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "refresh",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"mount\": \"extension\",\n      \"instrumentType\": \"pipette\",\n      \"instrumentModel\": \"string\",\n      \"serialNumber\": \"string\",\n      \"subsystems\": [\n        \"string\",\n        \"string\"\n      ],\n      \"data\": {\n        \"key_0\": 9942,\n        \"key_1\": \"string\",\n        \"key_2\": 8338.983485949528\n      }\n    },\n    {\n      \"mount\": \"extension\",\n      \"instrumentType\": \"gripper\",\n      \"instrumentModel\": \"string\",\n      \"serialNumber\": \"string\",\n      \"subsystems\": [\n        \"string\",\n        \"string\"\n      ],\n      \"data\": {\n        \"key_0\": false,\n        \"key_1\": false\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The IP address of the Opentrons robot on the local network",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.1.100",
+      "key": "robotIP"
+    },
+    {
+      "type": "string",
+      "value": "http://{{robotIP}}:31950",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1e4e5f18-201c-4aca-8068-75d4b63ab4ee",
+    "name": "Opentrons HTTP Attached Instruments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot at /openapi.json.\n\nContact Support:\n Name: Opentrons Support\n Email: support@opentrons.com",
+      "type": "text/plain"
+    }
+  }
+}

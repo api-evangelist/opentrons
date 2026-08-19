@@ -1,0 +1,1177 @@
+{
+  "item": [
+    {
+      "id": "f70f5c26-5077-4473-b8eb-d8efeb230bf3",
+      "name": "Protocol Management",
+      "description": {
+        "content": "Upload, manage, and analyze protocols",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ebd53a75-78b0-4587-8a8d-49e5f70b90c9",
+          "name": "Upload a protocol",
+          "request": {
+            "name": "Upload a protocol",
+            "description": {
+              "content": "Upload a new protocol file (Python or JSON) to the robot. The protocol will be analyzed after upload.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "protocols"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "files",
+                  "value": "[\"<binary>\",\"<binary>\"]",
+                  "type": "text",
+                  "description": "(Required) Protocol file(s) to upload (Python .py or JSON .json)"
+                },
+                {
+                  "key": "runTimeParameterValues",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "JSON-encoded runtime parameter values"
+                },
+                {
+                  "key": "runTimeParameterFiles",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "JSON-encoded runtime parameter CSV file associations"
+                },
+                {
+                  "key": "protocolKind",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "The kind of protocol being uploaded (This can only be one of standard,quick-transfer)"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ac16d63a-e36b-4cc5-bbbf-b415b6ceb8f4",
+              "name": "Protocol uploaded and analysis queued",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protocols"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Protocol file(s) to upload (Python .py or JSON .json)",
+                        "type": "text/plain"
+                      },
+                      "key": "files",
+                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "JSON-encoded runtime parameter values",
+                        "type": "text/plain"
+                      },
+                      "key": "runTimeParameterValues",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "JSON-encoded runtime parameter CSV file associations",
+                        "type": "text/plain"
+                      },
+                      "key": "runTimeParameterFiles",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The kind of protocol being uploaded (This can only be one of standard,quick-transfer)",
+                        "type": "text/plain"
+                      },
+                      "key": "protocolKind",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"createdAt\": \"1978-05-23T06:26:58.282Z\",\n    \"protocolType\": \"python\",\n    \"protocolKind\": \"standard\",\n    \"metadata\": {\n      \"protocolName\": \"string\",\n      \"author\": \"string\",\n      \"description\": \"string\",\n      \"created\": 6493.243878489637,\n      \"lastModified\": 7867.432556967297,\n      \"category\": \"string\",\n      \"subcategory\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"analysisSummaries\": [\n      {\n        \"id\": \"string\",\n        \"status\": \"pending\"\n      },\n      {\n        \"id\": \"string\",\n        \"status\": \"pending\"\n      }\n    ],\n    \"files\": [\n      {\n        \"name\": \"string\",\n        \"role\": \"data\"\n      },\n      {\n        \"name\": \"string\",\n        \"role\": \"labware\"\n      }\n    ],\n    \"robotType\": \"OT-3 Standard\"\n  },\n  \"links\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8474c78d-b484-405e-8949-da9263bc8b65",
+              "name": "Protocol file is invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protocols"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Protocol file(s) to upload (Python .py or JSON .json)",
+                        "type": "text/plain"
+                      },
+                      "key": "files",
+                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "JSON-encoded runtime parameter values",
+                        "type": "text/plain"
+                      },
+                      "key": "runTimeParameterValues",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "JSON-encoded runtime parameter CSV file associations",
+                        "type": "text/plain"
+                      },
+                      "key": "runTimeParameterFiles",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The kind of protocol being uploaded (This can only be one of standard,quick-transfer)",
+                        "type": "text/plain"
+                      },
+                      "key": "protocolKind",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"detail\": \"string\",\n      \"errorCode\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"detail\": \"string\",\n      \"errorCode\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f3bd3a1-0abd-430b-98ad-73962edfc398",
+          "name": "Get uploaded protocols",
+          "request": {
+            "name": "Get uploaded protocols",
+            "description": {
+              "content": "Get a list of all protocols that have been uploaded to the robot.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "protocols"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "protocolKind",
+                  "value": "<string>",
+                  "description": "Filter by protocol kind"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d4553a4f-68b5-4953-acec-7fbb1104b607",
+              "name": "List of uploaded protocols",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protocols"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "protocolKind",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"createdAt\": \"1957-10-12T09:59:55.124Z\",\n      \"protocolType\": \"json\",\n      \"protocolKind\": \"quick-transfer\",\n      \"metadata\": {\n        \"protocolName\": \"string\",\n        \"author\": \"string\",\n        \"description\": \"string\",\n        \"created\": 524.5708945082183,\n        \"lastModified\": 9941.107170250214,\n        \"category\": \"string\",\n        \"subcategory\": \"string\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"analysisSummaries\": [\n        {\n          \"id\": \"string\",\n          \"status\": \"completed\"\n        },\n        {\n          \"id\": \"string\",\n          \"status\": \"completed\"\n        }\n      ],\n      \"files\": [\n        {\n          \"name\": \"string\",\n          \"role\": \"data\"\n        },\n        {\n          \"name\": \"string\",\n          \"role\": \"labware\"\n        }\n      ],\n      \"robotType\": \"OT-2 Standard\"\n    },\n    {\n      \"id\": \"string\",\n      \"createdAt\": \"1961-09-07T04:08:16.565Z\",\n      \"protocolType\": \"json\",\n      \"protocolKind\": \"quick-transfer\",\n      \"metadata\": {\n        \"protocolName\": \"string\",\n        \"author\": \"string\",\n        \"description\": \"string\",\n        \"created\": 5196.416863679476,\n        \"lastModified\": 8894.859608495828,\n        \"category\": \"string\",\n        \"subcategory\": \"string\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"analysisSummaries\": [\n        {\n          \"id\": \"string\",\n          \"status\": \"pending\"\n        },\n        {\n          \"id\": \"string\",\n          \"status\": \"pending\"\n        }\n      ],\n      \"files\": [\n        {\n          \"name\": \"string\",\n          \"role\": \"main\"\n        },\n        {\n          \"name\": \"string\",\n          \"role\": \"main\"\n        }\n      ],\n      \"robotType\": \"OT-2 Standard\"\n    }\n  ],\n  \"meta\": {\n    \"cursor\": 3996,\n    \"totalLength\": 5472\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7f7b11c8-2f6f-4ddc-93c5-4d8b31ff4978",
+          "name": "Get an uploaded protocol",
+          "request": {
+            "name": "Get an uploaded protocol",
+            "description": {
+              "content": "Get details for a specific uploaded protocol by its ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "protocols",
+                ":protocolId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "protocolId",
+                  "description": "(Required) The protocol's unique identifier"
+                },
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cc5ab009-d740-4388-abfc-2ae218632b5b",
+              "name": "Protocol details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protocols",
+                    ":protocolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "protocolId",
+                      "description": "(Required) The protocol's unique identifier"
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"createdAt\": \"1978-05-23T06:26:58.282Z\",\n    \"protocolType\": \"python\",\n    \"protocolKind\": \"standard\",\n    \"metadata\": {\n      \"protocolName\": \"string\",\n      \"author\": \"string\",\n      \"description\": \"string\",\n      \"created\": 6493.243878489637,\n      \"lastModified\": 7867.432556967297,\n      \"category\": \"string\",\n      \"subcategory\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"analysisSummaries\": [\n      {\n        \"id\": \"string\",\n        \"status\": \"pending\"\n      },\n      {\n        \"id\": \"string\",\n        \"status\": \"pending\"\n      }\n    ],\n    \"files\": [\n      {\n        \"name\": \"string\",\n        \"role\": \"data\"\n      },\n      {\n        \"name\": \"string\",\n        \"role\": \"labware\"\n      }\n    ],\n    \"robotType\": \"OT-3 Standard\"\n  },\n  \"links\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ad901cb-cf2f-43a9-a1cc-8858530bd089",
+              "name": "Protocol not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protocols",
+                    ":protocolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "protocolId",
+                      "description": "(Required) The protocol's unique identifier"
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"detail\": \"string\",\n      \"errorCode\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"detail\": \"string\",\n      \"errorCode\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "850168f8-f0b7-4aaf-b9a0-ddc430bd3380",
+          "name": "Delete an uploaded protocol",
+          "request": {
+            "name": "Delete an uploaded protocol",
+            "description": {
+              "content": "Delete a specific protocol from the robot by its ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "protocols",
+                ":protocolId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "protocolId",
+                  "description": "(Required) The protocol's unique identifier"
+                },
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "29dda08b-0fb8-4e3e-8fc5-8a74abd40de2",
+              "name": "Protocol deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protocols",
+                    ":protocolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "protocolId",
+                      "description": "(Required) The protocol's unique identifier"
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"createdAt\": \"1978-05-23T06:26:58.282Z\",\n    \"protocolType\": \"python\",\n    \"protocolKind\": \"standard\",\n    \"metadata\": {\n      \"protocolName\": \"string\",\n      \"author\": \"string\",\n      \"description\": \"string\",\n      \"created\": 6493.243878489637,\n      \"lastModified\": 7867.432556967297,\n      \"category\": \"string\",\n      \"subcategory\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"analysisSummaries\": [\n      {\n        \"id\": \"string\",\n        \"status\": \"pending\"\n      },\n      {\n        \"id\": \"string\",\n        \"status\": \"pending\"\n      }\n    ],\n    \"files\": [\n      {\n        \"name\": \"string\",\n        \"role\": \"data\"\n      },\n      {\n        \"name\": \"string\",\n        \"role\": \"labware\"\n      }\n    ],\n    \"robotType\": \"OT-3 Standard\"\n  },\n  \"links\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c649a87f-2740-4396-b18e-fbf0423751f6",
+              "name": "Protocol not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protocols",
+                    ":protocolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "protocolId",
+                      "description": "(Required) The protocol's unique identifier"
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"detail\": \"string\",\n      \"errorCode\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"detail\": \"string\",\n      \"errorCode\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e847112-402f-47e5-999c-9bdb29b8a1fc",
+              "name": "Protocol is in use by a run",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protocols",
+                    ":protocolId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "protocolId",
+                      "description": "(Required) The protocol's unique identifier"
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"detail\": \"string\",\n      \"errorCode\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"detail\": \"string\",\n      \"errorCode\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ca2225e0-dde4-48b5-9b93-1bbfc507c07b",
+          "name": "Analyze the protocol",
+          "request": {
+            "name": "Analyze the protocol",
+            "description": {
+              "content": "Trigger a new analysis of a protocol with the given runtime parameter values.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "protocols",
+                ":protocolId",
+                "analyses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "protocolId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"runTimeParameterValues\": {\n    \"key_0\": 8156.212226341459\n  },\n  \"runTimeParameterFiles\": {\n    \"key_0\": \"<string>\"\n  },\n  \"forceReAnalyze\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "48b745da-2c1f-4bbc-a5ce-9dfadcd2f730",
+              "name": "Analysis queued or completed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protocols",
+                    ":protocolId",
+                    "analyses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "protocolId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runTimeParameterValues\": {\n    \"key_0\": true,\n    \"key_1\": false,\n    \"key_2\": 9552,\n    \"key_3\": true\n  },\n  \"runTimeParameterFiles\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"forceReAnalyze\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"status\": \"completed\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6eb3f39a-e6e8-4cde-b54e-f7e6d8b3838f",
+          "name": "Get a protocol's analyses",
+          "request": {
+            "name": "Get a protocol's analyses",
+            "description": {
+              "content": "Get all analyses for a given protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "protocols",
+                ":protocolId",
+                "analyses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "protocolId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "252e5897-9cf0-4516-a456-6d1e0116fa80",
+              "name": "List of analyses",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protocols",
+                    ":protocolId",
+                    "analyses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "protocolId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"status\": \"pending\",\n      \"result\": \"not-ok\"\n    },\n    {\n      \"id\": \"string\",\n      \"status\": \"completed\",\n      \"result\": \"ok\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0523debd-4c1e-4c6e-8e86-d4e351c0aa3c",
+          "name": "Get one of a protocol's analyses",
+          "request": {
+            "name": "Get one of a protocol's analyses",
+            "description": {
+              "content": "Get the full details of a specific analysis by its ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "protocols",
+                ":protocolId",
+                "analyses",
+                ":analysisId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "protocolId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "analysisId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a7e2f4bd-6aed-44b1-9da2-518858e1c3e2",
+              "name": "Analysis details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protocols",
+                    ":protocolId",
+                    "analyses",
+                    ":analysisId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "protocolId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "analysisId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"pending\",\n  \"result\": \"parameter-value-required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The IP address of the Opentrons robot on the local network",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.1.100",
+      "key": "robotIP"
+    },
+    {
+      "type": "string",
+      "value": "http://{{robotIP}}:31950",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "225fff66-5e11-414a-b7eb-3d4d1abcd0cf",
+    "name": "Opentrons HTTP Attached Instruments Protocol Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot at /openapi.json.\n\nContact Support:\n Name: Opentrons Support\n Email: support@opentrons.com",
+      "type": "text/plain"
+    }
+  }
+}

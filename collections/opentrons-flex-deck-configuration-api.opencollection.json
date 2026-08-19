@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Opentrons HTTP Attached Instruments Flex Deck Configuration API",
+    "version": "4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Flex Deck Configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the Flex deck configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/deck_configuration",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ]
+          },
+          "docs": "Get the current deck configuration for a Flex robot, including all fixture assignments."
+        },
+        {
+          "info": {
+            "name": "Set the Flex deck configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{robotIP}:31950/deck_configuration",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set a new deck configuration for a Flex robot, assigning fixtures to deck slots."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

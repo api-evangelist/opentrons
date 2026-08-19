@@ -1,0 +1,137 @@
+{
+  "item": [
+    {
+      "id": "2e95d735-9b4c-472c-aa55-7929ace9546a",
+      "name": "Attached Modules",
+      "description": {
+        "content": "Query attached hardware modules",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "daaf7095-92bc-4872-bca4-f8331a63b0af",
+          "name": "Get attached modules",
+          "request": {
+            "name": "Get attached modules",
+            "description": {
+              "content": "Get a list of all hardware modules currently attached to the robot, including thermocyclers, heater-shakers, temperature modules, magnetic modules, and absorbance plate readers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "modules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The IP address of the Opentrons robot on the local network",
+                  "type": "any",
+                  "value": "{{robotIP}}",
+                  "key": "robotIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                "key": "Opentrons-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a9b49024-0040-4248-8f63-65a31d5ef669",
+              "name": "List of attached modules",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "modules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The IP address of the Opentrons robot on the local network",
+                      "type": "any",
+                      "value": "{{robotIP}}",
+                      "key": "robotIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.",
+                    "key": "Opentrons-Version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"serialNumber\": \"string\",\n      \"firmwareVersion\": \"string\",\n      \"hardwareRevision\": \"string\",\n      \"hasAvailableUpdate\": false,\n      \"moduleType\": \"heaterShakerModuleType\",\n      \"moduleModel\": \"string\",\n      \"slotName\": \"string\",\n      \"data\": {\n        \"key_0\": 9200\n      },\n      \"usbPort\": {\n        \"port\": 3432,\n        \"portGroup\": \"string\",\n        \"hubPort\": 9441,\n        \"path\": \"string\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"serialNumber\": \"string\",\n      \"firmwareVersion\": \"string\",\n      \"hardwareRevision\": \"string\",\n      \"hasAvailableUpdate\": true,\n      \"moduleType\": \"magneticBlockType\",\n      \"moduleModel\": \"string\",\n      \"slotName\": \"string\",\n      \"data\": {\n        \"key_0\": 7735\n      },\n      \"usbPort\": {\n        \"port\": 4131,\n        \"portGroup\": \"string\",\n        \"hubPort\": 1721,\n        \"path\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The IP address of the Opentrons robot on the local network",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.1.100",
+      "key": "robotIP"
+    },
+    {
+      "type": "string",
+      "value": "http://{{robotIP}}:31950",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2436afc1-6a9e-4513-9d5c-54e9b1c28ebc",
+    "name": "Opentrons HTTP Attached Instruments Attached Modules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Opentrons HTTP API is a RESTful JSON-based interface exposed by Opentrons robots (Flex and OT-2) on the local network at port 31950. It enables developers to upload and manage protocols, create and control runs, issue atomic liquid handling commands, and query robot health and hardware state. The API is defined by an OpenAPI specification available directly from the robot at /openapi.json.\n\nContact Support:\n Name: Opentrons Support\n Email: support@opentrons.com",
+      "type": "text/plain"
+    }
+  }
+}

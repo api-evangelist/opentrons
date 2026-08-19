@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Opentrons HTTP Attached Instruments Simple Commands API",
+    "version": "4"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Simple Commands",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of queued and executed commands",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/commands",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageLength",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a list of stateless commands that have been issued to the robot."
+        },
+        {
+          "info": {
+            "name": "Add a command to be executed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{robotIP}:31950/commands",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "waitUntilComplete",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute an atomic liquid handling command directly on the robot without needing a run. These stateless commands are executed immediately."
+        },
+        {
+          "info": {
+            "name": "Get a single stateless command",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{robotIP}:31950/commands/:commandId",
+            "headers": [
+              {
+                "name": "Opentrons-Version",
+                "value": "*"
+              }
+            ],
+            "params": [
+              {
+                "name": "commandId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the details of a specific stateless command by its ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
