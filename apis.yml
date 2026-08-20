@@ -26,6 +26,15 @@ tags:
   - Life Sciences
   - Protocol Management
   - Hardware Control
+  - Open-Source
+tags_raw:
+  - Lab Automation
+  - Liquid Handling
+  - Robotics
+  - Biology
+  - Life Sciences
+  - Protocol Management
+  - Hardware Control
   - Open Source
 apis:
 - name: Opentrons Python Protocol API
@@ -39,6 +48,13 @@ apis:
   humanURL: https://docs.opentrons.com/v2/
   baseURL: https://docs.opentrons.com
   tags:
+  - Python
+  - Protocol
+  - Liquid Handling
+  - Lab Automation
+  - Hardware Modules
+  - Open-Source
+  tags_raw:
   - Python
   - Protocol
   - Liquid Handling
