@@ -1,6 +1,20 @@
 aid: opentrons
 name: Opentrons
 description: Opentrons is a lab automation platform providing a REST HTTP API and Python Protocol API for controlling liquid handling robots such as the Opentrons Flex and OT-2. Developers can programmatically manage protocols, control pipettes, run liquid handling workflows, manage labware, and integrate biology lab automation into their applications. The HTTP API operates on-robot over a local network and exposes OpenAPI-defined endpoints for protocol upload, run management, atomic liquid handling commands, and hardware control.
+deliveryModel:
+  model: open-core
+  license: Apache-2.0
+  open_source: true
+  commercial: true
+  callable_host: false
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: unknown
@@ -241,6 +255,14 @@ apis:
   - type: IntegrationTools
     url: https://github.com/Opentrons/opentrons-integration-tools
 common:
+  - type: IssueTracker
+    url: https://github.com/Opentrons/opentrons/issues
+  - type: Releases
+    url: https://github.com/Opentrons/opentrons/releases
+  - type: CodeOfConduct
+    url: https://github.com/Opentrons/.github/blob/main/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/Opentrons/opentrons/blob/edge/CONTRIBUTING.md
   - type: License
     name: Apache-2.0
     url: https://github.com/Opentrons/opentrons/blob/edge/LICENSE
