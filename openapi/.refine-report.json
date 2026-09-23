@@ -1,15 +1,7 @@
 {
   "provider": "opentrons",
   "sources": [
-    "opentrons-attached-instruments-api-openapi.yml",
-    "opentrons-attached-modules-api-openapi.yml",
-    "opentrons-flex-deck-configuration-api-openapi.yml",
-    "opentrons-health-api-openapi.yml",
-    "opentrons-protocol-management-api-openapi.yml",
-    "opentrons-robot-api-openapi.yml",
-    "opentrons-run-management-api-openapi.yml",
-    "opentrons-simple-commands-api-openapi.yml",
-    "opentrons-system-control-api-openapi.yml"
+    "_original/opentrons-http-api.json"
   ],
   "outputs": [
     "opentrons-attached-instruments-api-openapi.yml",
@@ -25,6 +17,20 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "opentrons-http-api.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "opentrons-attached-instruments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "opentrons-attached-modules-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "opentrons-flex-deck-configuration-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "opentrons-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "opentrons-protocol-management-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "opentrons-robot-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "opentrons-run-management-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "opentrons-simple-commands-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "opentrons-system-control-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
