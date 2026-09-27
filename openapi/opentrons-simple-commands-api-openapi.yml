@@ -101,16 +101,6 @@ paths:
                 $ref: '#/components/schemas/CommandResponse'
 components:
   schemas:
-    MultiBodyMeta:
-      type: object
-      description: Pagination metadata for multi-item responses
-      properties:
-        cursor:
-          type: integer
-          description: The index of the first item in this page
-        totalLength:
-          type: integer
-          description: The total number of items available
     CommandRequest:
       type: object
       description: A command to execute on the robot
@@ -185,6 +175,21 @@ components:
         key:
           type: string
           nullable: true
+    CommandResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Command'
+    MultiBodyMeta:
+      type: object
+      description: Pagination metadata for multi-item responses
+      properties:
+        cursor:
+          type: integer
+          description: The index of the first item in this page
+        totalLength:
+          type: integer
+          description: The total number of items available
     CommandListResponse:
       type: object
       properties:
@@ -196,11 +201,6 @@ components:
           $ref: '#/components/schemas/MultiBodyMeta'
         links:
           type: object
-    CommandResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Command'
   parameters:
     OTVersionHeader:
       name: Opentrons-Version

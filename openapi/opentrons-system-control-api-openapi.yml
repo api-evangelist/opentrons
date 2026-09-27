@@ -61,29 +61,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/SystemTimeResponse'
 components:
-  schemas:
-    SystemTimeRequest:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            systemTime:
-              type: string
-              format: date-time
-              description: The time to set on the robot
-          required:
-          - systemTime
-    SystemTimeResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            systemTime:
-              type: string
-              format: date-time
-              description: The current system time in ISO 8601 format
   parameters:
     OTVersionHeader:
       name: Opentrons-Version
@@ -99,3 +76,26 @@ components:
           minimum: 2
           maximum: 4
       example: '*'
+  schemas:
+    SystemTimeResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            systemTime:
+              type: string
+              format: date-time
+              description: The current system time in ISO 8601 format
+    SystemTimeRequest:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            systemTime:
+              type: string
+              format: date-time
+              description: The time to set on the robot
+          required:
+          - systemTime

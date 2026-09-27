@@ -72,6 +72,20 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/CutoutFixture'
+    DeckConfigurationResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            cutoutFixtures:
+              type: array
+              items:
+                $ref: '#/components/schemas/CutoutFixture'
+            lastModifiedAt:
+              type: string
+              format: date-time
+              nullable: true
     CutoutFixture:
       type: object
       description: A fixture assigned to a deck cutout on the Flex
@@ -89,20 +103,6 @@ components:
       required:
       - cutoutId
       - cutoutFixtureId
-    DeckConfigurationResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            cutoutFixtures:
-              type: array
-              items:
-                $ref: '#/components/schemas/CutoutFixture'
-            lastModifiedAt:
-              type: string
-              format: date-time
-              nullable: true
   parameters:
     OTVersionHeader:
       name: Opentrons-Version

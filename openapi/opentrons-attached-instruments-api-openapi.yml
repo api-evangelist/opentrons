@@ -47,6 +47,13 @@ paths:
                 $ref: '#/components/schemas/InstrumentListResponse'
 components:
   schemas:
+    InstrumentListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Instrument'
     Instrument:
       type: object
       description: A pipette or gripper attached to the robot
@@ -74,13 +81,6 @@ components:
         data:
           type: object
           additionalProperties: true
-    InstrumentListResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Instrument'
   parameters:
     OTVersionHeader:
       name: Opentrons-Version

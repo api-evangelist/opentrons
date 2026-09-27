@@ -45,6 +45,25 @@ paths:
                 $ref: '#/components/schemas/BasicResponse'
 components:
   schemas:
+    HealthLinks:
+      type: object
+      description: Links to related resources on the robot server
+      properties:
+        apiLog:
+          type: string
+          description: Path to the API log
+        serialLog:
+          type: string
+          description: Path to the serial log
+        serverLog:
+          type: string
+          description: Path to the server log
+        apiSpec:
+          type: string
+          description: Path to the OpenAPI specification
+        systemTime:
+          type: string
+          description: Path to the system time endpoint
     Health:
       type: object
       description: Robot server health information
@@ -104,22 +123,3 @@ components:
       properties:
         message:
           type: string
-    HealthLinks:
-      type: object
-      description: Links to related resources on the robot server
-      properties:
-        apiLog:
-          type: string
-          description: Path to the API log
-        serialLog:
-          type: string
-          description: Path to the serial log
-        serverLog:
-          type: string
-          description: Path to the server log
-        apiSpec:
-          type: string
-          description: Path to the OpenAPI specification
-        systemTime:
-          type: string
-          description: Path to the system time endpoint
