@@ -41,13 +41,6 @@ paths:
                 $ref: '#/components/schemas/ModuleListResponse'
 components:
   schemas:
-    ModuleListResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Module'
     Module:
       type: object
       description: A hardware module attached to the robot
@@ -92,6 +85,13 @@ components:
               nullable: true
             path:
               type: string
+    ModuleListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Module'
   parameters:
     OTVersionHeader:
       name: Opentrons-Version

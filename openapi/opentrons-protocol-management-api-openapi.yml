@@ -230,132 +230,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProtocolAnalysis'
 components:
+  parameters:
+    OTVersionHeader:
+      name: Opentrons-Version
+      in: header
+      required: true
+      description: The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.
+      schema:
+        oneOf:
+        - type: string
+          enum:
+          - '*'
+        - type: integer
+          minimum: 2
+          maximum: 4
+      example: '*'
   schemas:
-    ProtocolAnalysis:
-      type: object
-      description: The result of analyzing a protocol
-      properties:
-        id:
-          type: string
-        status:
-          type: string
-          enum:
-          - pending
-          - completed
-        result:
-          type: string
-          enum:
-          - ok
-          - not-ok
-          - parameter-value-required
-          nullable: true
-        pipettes:
-          type: array
-          items:
-            type: object
-        labware:
-          type: array
-          items:
-            type: object
-        modules:
-          type: array
-          items:
-            type: object
-        commands:
-          type: array
-          items:
-            type: object
-        errors:
-          type: array
-          items:
-            type: object
-        warnings:
-          type: array
-          items:
-            type: object
-        runTimeParameters:
-          type: array
-          items:
-            type: object
-    ProtocolListResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Protocol'
-        meta:
-          $ref: '#/components/schemas/MultiBodyMeta'
-    ProtocolMetadata:
-      type: object
-      description: Metadata extracted from the protocol
-      properties:
-        protocolName:
-          type: string
-        author:
-          type: string
-        description:
-          type: string
-        created:
-          type: number
-        lastModified:
-          type: number
-        category:
-          type: string
-        subcategory:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-    ProtocolFile:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The filename
-        role:
-          type: string
-          enum:
-          - main
-          - labware
-          - data
-          description: The file's role in the protocol
-    ErrorResponse:
-      type: object
-      description: Error response from the API
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorDetail'
-    ProtocolResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Protocol'
-        links:
-          type: object
-    ErrorDetail:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Machine-readable error type identifier
-        title:
-          type: string
-          description: Human-readable error title
-        detail:
-          type: string
-          description: Human-readable error detail
-        errorCode:
-          type: string
-          description: Opentrons error code
-    AnalysisSummaryResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/AnalysisSummary'
     Protocol:
       type: object
       description: A protocol uploaded to the robot
@@ -403,6 +293,22 @@ components:
       - metadata
       - analysisSummaries
       - files
+    ProtocolResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Protocol'
+        links:
+          type: object
+    ProtocolListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Protocol'
+        meta:
+          $ref: '#/components/schemas/MultiBodyMeta'
     MultiBodyMeta:
       type: object
       description: Pagination metadata for multi-item responses
@@ -413,6 +319,14 @@ components:
         totalLength:
           type: integer
           description: The total number of items available
+    ErrorResponse:
+      type: object
+      description: Error response from the API
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetail'
     AnalysisSummary:
       type: object
       properties:
@@ -446,18 +360,104 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProtocolAnalysis'
-  parameters:
-    OTVersionHeader:
-      name: Opentrons-Version
-      in: header
-      required: true
-      description: The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.
-      schema:
-        oneOf:
-        - type: string
+    ErrorDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Machine-readable error type identifier
+        title:
+          type: string
+          description: Human-readable error title
+        detail:
+          type: string
+          description: Human-readable error detail
+        errorCode:
+          type: string
+          description: Opentrons error code
+    ProtocolAnalysis:
+      type: object
+      description: The result of analyzing a protocol
+      properties:
+        id:
+          type: string
+        status:
+          type: string
           enum:
-          - '*'
-        - type: integer
-          minimum: 2
-          maximum: 4
-      example: '*'
+          - pending
+          - completed
+        result:
+          type: string
+          enum:
+          - ok
+          - not-ok
+          - parameter-value-required
+          nullable: true
+        pipettes:
+          type: array
+          items:
+            type: object
+        labware:
+          type: array
+          items:
+            type: object
+        modules:
+          type: array
+          items:
+            type: object
+        commands:
+          type: array
+          items:
+            type: object
+        errors:
+          type: array
+          items:
+            type: object
+        warnings:
+          type: array
+          items:
+            type: object
+        runTimeParameters:
+          type: array
+          items:
+            type: object
+    ProtocolMetadata:
+      type: object
+      description: Metadata extracted from the protocol
+      properties:
+        protocolName:
+          type: string
+        author:
+          type: string
+        description:
+          type: string
+        created:
+          type: number
+        lastModified:
+          type: number
+        category:
+          type: string
+        subcategory:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+    ProtocolFile:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The filename
+        role:
+          type: string
+          enum:
+          - main
+          - labware
+          - data
+          description: The file's role in the protocol
+    AnalysisSummaryResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AnalysisSummary'

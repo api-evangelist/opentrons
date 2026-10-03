@@ -263,6 +263,45 @@ paths:
                 $ref: '#/components/schemas/CommandResponse'
 components:
   schemas:
+    RunAction:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        actionType:
+          type: string
+          enum:
+          - play
+          - pause
+          - stop
+          - resume-from-recovery
+          - resume-from-recovery-assuming-false-positive
+    CreateRunRequest:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            protocolId:
+              type: string
+              description: The ID of the protocol to run
+            labwareOffsets:
+              type: array
+              items:
+                type: object
+              description: Labware offsets to apply to this run
+            runTimeParameterValues:
+              type: object
+              additionalProperties: true
+              description: Runtime parameter values keyed by variable name
+            runTimeParameterFiles:
+              type: object
+              additionalProperties:
+                type: string
+              description: CSV file IDs keyed by parameter variable name
     Run:
       type: object
       description: A protocol run on the robot
@@ -326,6 +365,48 @@ components:
       - pipettes
       - labware
       - modules
+    MultiBodyMeta:
+      type: object
+      description: Pagination metadata for multi-item responses
+      properties:
+        cursor:
+          type: integer
+          description: The index of the first item in this page
+        totalLength:
+          type: integer
+          description: The total number of items available
+    CommandResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Command'
+    RunActionRequest:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            actionType:
+              type: string
+              enum:
+              - play
+              - pause
+              - stop
+              - resume-from-recovery
+              - resume-from-recovery-assuming-false-positive
+              description: The type of control action to issue
+          required:
+          - actionType
+      required:
+      - data
+    ErrorResponse:
+      type: object
+      description: Error response from the API
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetail'
     UpdateRunRequest:
       type: object
       properties:
@@ -335,6 +416,11 @@ components:
             current:
               type: boolean
               description: Set this run as the current active run
+    RunActionResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RunAction'
     CommandRequest:
       type: object
       description: A command to execute on the robot
@@ -362,32 +448,6 @@ components:
           required:
           - commandType
           - params
-      required:
-      - data
-    RunResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Run'
-        links:
-          type: object
-    RunActionRequest:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            actionType:
-              type: string
-              enum:
-              - play
-              - pause
-              - stop
-              - resume-from-recovery
-              - resume-from-recovery-assuming-false-positive
-              description: The type of control action to issue
-          required:
-          - actionType
       required:
       - data
     Command:
@@ -435,44 +495,6 @@ components:
         key:
           type: string
           nullable: true
-    CreateRunRequest:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            protocolId:
-              type: string
-              description: The ID of the protocol to run
-            labwareOffsets:
-              type: array
-              items:
-                type: object
-              description: Labware offsets to apply to this run
-            runTimeParameterValues:
-              type: object
-              additionalProperties: true
-              description: Runtime parameter values keyed by variable name
-            runTimeParameterFiles:
-              type: object
-              additionalProperties:
-                type: string
-              description: CSV file IDs keyed by parameter variable name
-    CommandResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Command'
-    MultiBodyMeta:
-      type: object
-      description: Pagination metadata for multi-item responses
-      properties:
-        cursor:
-          type: integer
-          description: The index of the first item in this page
-        totalLength:
-          type: integer
-          description: The total number of items available
     RunListResponse:
       type: object
       properties:
@@ -480,30 +502,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Run'
-        meta:
-          $ref: '#/components/schemas/MultiBodyMeta'
-        links:
-          type: object
-    RunActionResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RunAction'
-    ErrorResponse:
-      type: object
-      description: Error response from the API
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorDetail'
-    CommandListResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Command'
         meta:
           $ref: '#/components/schemas/MultiBodyMeta'
         links:
@@ -523,22 +521,24 @@ components:
         errorCode:
           type: string
           description: Opentrons error code
-    RunAction:
+    RunResponse:
       type: object
       properties:
-        id:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        actionType:
-          type: string
-          enum:
-          - play
-          - pause
-          - stop
-          - resume-from-recovery
-          - resume-from-recovery-assuming-false-positive
+        data:
+          $ref: '#/components/schemas/Run'
+        links:
+          type: object
+    CommandListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Command'
+        meta:
+          $ref: '#/components/schemas/MultiBodyMeta'
+        links:
+          type: object
   parameters:
     OTVersionHeader:
       name: Opentrons-Version
