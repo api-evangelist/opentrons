@@ -61,32 +61,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeckConfigurationResponse'
 components:
-  parameters:
-    OTVersionHeader:
-      name: Opentrons-Version
-      in: header
-      required: true
-      description: The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.
-      schema:
-        oneOf:
-        - type: string
-          enum:
-          - '*'
-        - type: integer
-          minimum: 2
-          maximum: 4
-      example: '*'
   schemas:
-    DeckConfigurationRequest:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            cutoutFixtures:
-              type: array
-              items:
-                $ref: '#/components/schemas/CutoutFixture'
     CutoutFixture:
       type: object
       description: A fixture assigned to a deck cutout on the Flex
@@ -118,3 +93,28 @@ components:
               type: string
               format: date-time
               nullable: true
+    DeckConfigurationRequest:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            cutoutFixtures:
+              type: array
+              items:
+                $ref: '#/components/schemas/CutoutFixture'
+  parameters:
+    OTVersionHeader:
+      name: Opentrons-Version
+      in: header
+      required: true
+      description: The HTTP API version to use for this request. Must be 2 or higher. Use '*' to get the latest version.
+      schema:
+        oneOf:
+        - type: string
+          enum:
+          - '*'
+        - type: integer
+          minimum: 2
+          maximum: 4
+      example: '*'

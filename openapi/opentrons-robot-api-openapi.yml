@@ -73,21 +73,6 @@ paths:
                 $ref: '#/components/schemas/DoorStatusResponse'
 components:
   schemas:
-    DoorStatusResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            status:
-              type: string
-              enum:
-              - open
-              - closed
-              description: The current door status
-            doorRequiredClosedForProtocol:
-              type: boolean
-              description: Whether the door must be closed to run a protocol
     EstopStatusResponse:
       type: object
       properties:
@@ -116,6 +101,21 @@ components:
               - disengaged
               - notPresent
               nullable: true
+    DoorStatusResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            status:
+              type: string
+              enum:
+              - open
+              - closed
+              description: The current door status
+            doorRequiredClosedForProtocol:
+              type: boolean
+              description: Whether the door must be closed to run a protocol
   parameters:
     OTVersionHeader:
       name: Opentrons-Version

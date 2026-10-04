@@ -263,6 +263,11 @@ paths:
                 $ref: '#/components/schemas/CommandResponse'
 components:
   schemas:
+    RunActionResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RunAction'
     RunAction:
       type: object
       properties:
@@ -279,29 +284,21 @@ components:
           - stop
           - resume-from-recovery
           - resume-from-recovery-assuming-false-positive
-    CreateRunRequest:
+    ErrorDetail:
       type: object
       properties:
-        data:
-          type: object
-          properties:
-            protocolId:
-              type: string
-              description: The ID of the protocol to run
-            labwareOffsets:
-              type: array
-              items:
-                type: object
-              description: Labware offsets to apply to this run
-            runTimeParameterValues:
-              type: object
-              additionalProperties: true
-              description: Runtime parameter values keyed by variable name
-            runTimeParameterFiles:
-              type: object
-              additionalProperties:
-                type: string
-              description: CSV file IDs keyed by parameter variable name
+        id:
+          type: string
+          description: Machine-readable error type identifier
+        title:
+          type: string
+          description: Human-readable error title
+        detail:
+          type: string
+          description: Human-readable error detail
+        errorCode:
+          type: string
+          description: Opentrons error code
     Run:
       type: object
       description: A protocol run on the robot
@@ -375,30 +372,6 @@ components:
         totalLength:
           type: integer
           description: The total number of items available
-    CommandResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Command'
-    RunActionRequest:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            actionType:
-              type: string
-              enum:
-              - play
-              - pause
-              - stop
-              - resume-from-recovery
-              - resume-from-recovery-assuming-false-positive
-              description: The type of control action to issue
-          required:
-          - actionType
-      required:
-      - data
     ErrorResponse:
       type: object
       description: Error response from the API
@@ -407,49 +380,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ErrorDetail'
-    UpdateRunRequest:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            current:
-              type: boolean
-              description: Set this run as the current active run
-    RunActionResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RunAction'
-    CommandRequest:
-      type: object
-      description: A command to execute on the robot
-      properties:
-        data:
-          type: object
-          properties:
-            commandType:
-              type: string
-              description: The type of command to execute (e.g., 'aspirate', 'dispense', 'pickUpTip')
-            params:
-              type: object
-              description: Command-specific parameters
-              additionalProperties: true
-            intent:
-              type: string
-              enum:
-              - setup
-              - protocol
-              - fixit
-              description: The intent of the command
-            key:
-              type: string
-              description: Optional key to identify this command for error recovery
-          required:
-          - commandType
-          - params
-      required:
-      - data
     Command:
       type: object
       description: A command that was executed or is queued
@@ -495,6 +425,20 @@ components:
         key:
           type: string
           nullable: true
+    CommandResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Command'
+    UpdateRunRequest:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            current:
+              type: boolean
+              description: Set this run as the current active run
     RunListResponse:
       type: object
       properties:
@@ -506,21 +450,6 @@ components:
           $ref: '#/components/schemas/MultiBodyMeta'
         links:
           type: object
-    ErrorDetail:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Machine-readable error type identifier
-        title:
-          type: string
-          description: Human-readable error title
-        detail:
-          type: string
-          description: Human-readable error detail
-        errorCode:
-          type: string
-          description: Opentrons error code
     RunResponse:
       type: object
       properties:
@@ -539,6 +468,77 @@ components:
           $ref: '#/components/schemas/MultiBodyMeta'
         links:
           type: object
+    RunActionRequest:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            actionType:
+              type: string
+              enum:
+              - play
+              - pause
+              - stop
+              - resume-from-recovery
+              - resume-from-recovery-assuming-false-positive
+              description: The type of control action to issue
+          required:
+          - actionType
+      required:
+      - data
+    CommandRequest:
+      type: object
+      description: A command to execute on the robot
+      properties:
+        data:
+          type: object
+          properties:
+            commandType:
+              type: string
+              description: The type of command to execute (e.g., 'aspirate', 'dispense', 'pickUpTip')
+            params:
+              type: object
+              description: Command-specific parameters
+              additionalProperties: true
+            intent:
+              type: string
+              enum:
+              - setup
+              - protocol
+              - fixit
+              description: The intent of the command
+            key:
+              type: string
+              description: Optional key to identify this command for error recovery
+          required:
+          - commandType
+          - params
+      required:
+      - data
+    CreateRunRequest:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            protocolId:
+              type: string
+              description: The ID of the protocol to run
+            labwareOffsets:
+              type: array
+              items:
+                type: object
+              description: Labware offsets to apply to this run
+            runTimeParameterValues:
+              type: object
+              additionalProperties: true
+              description: Runtime parameter values keyed by variable name
+            runTimeParameterFiles:
+              type: object
+              additionalProperties:
+                type: string
+              description: CSV file IDs keyed by parameter variable name
   parameters:
     OTVersionHeader:
       name: Opentrons-Version
