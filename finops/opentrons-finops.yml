@@ -1,3 +1,11 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+# Coverage demoted 2026-10-07 (roadmap#942, PLAN.md Stage A): this file was written by an API Evangelist
+# sweep and names no billing unit, meters or pricing category read from the provider — it restates the
+# FinOps framework. It is `x-coverage: unmeasured`, and the FOCUS alignment it claimed has been removed.
+x-coverage: unmeasured
+method: generated
 name: Opentrons FinOps
 description: Opentrons operates a hardware-centric revenue model. All API access — HTTP and Python Protocol API — is free and open-source, bundled with robot hardware. There are no recurring API costs, usage-based billing, or subscription fees for developers. Financial considerations are limited to upfront hardware investment and optional services.
 url: https://opentrons.com/

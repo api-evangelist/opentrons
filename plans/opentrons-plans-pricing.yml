@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: Opentrons Plans and Pricing
 description: Opentrons follows a hardware-centric business model. The HTTP API and Python Protocol API are open-source and freely available to all robot owners. There are no software subscription tiers for API access. Revenue is generated through robot hardware sales, accessories, and optional custom protocol development services.
 url: https://opentrons.com/robots/flex
@@ -58,3 +62,34 @@ notes:
   - No API keys or subscriptions required for HTTP API access
   - The robot must be on the same network as the client to access the HTTP API
   - Software updates are provided free of charge via the Opentrons App
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  units: []
+  plans:
+  - name: Opentrons Flex Robot
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Opentrons OT-2 Robot
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Flex NGS Workstation
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Custom Protocol Development
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
