@@ -64,22 +64,154 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Opentrons is a lab automation platform providing a REST HTTP API and Python Protocol API for controlling liquid handling robots. The Opentrons Flex and OT-2 robots expose a local HTTP API (port 31950) defined by an OpenAPI specification, enabling programmatic control over protocol upload, run management, atomic liquid handling commands, pipette operations, and hardware module integration. The Python Protocol API is an open-source framework for writing automated biology lab protocols with full control over labware, pipettes, and deck configuration.
+Opentrons is a lab automation platform providing a REST HTTP API and Python Protocol API for controlling liquid handling robots such as the Opentrons Flex and OT-2. Developers can programmatically manage protocols, control pipettes, run liquid handling workflows, manage labware, and integrate biology lab automation into their applications. The HTTP API operates on-robot over a local network and exposes OpenAPI-defined endpoints for protocol upload, run management, atomic liquid handling commands, and hardware control.
 
-**Human URL:** https://opentrons.com/  
-**Base URL:** http://{ROBOT_IP}:31950  
+**Areas:** Lab Automation · Liquid Handling · Robotics · Biology · Life Sciences · Protocol Management · Hardware Control · Open Source
 
-## Links
+## Opentrons on APIs.io
 
+Everything profiled for Opentrons is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/opentrons/](https://apis.io/providers/opentrons/)** — or go straight to one of the APIs or properties below.
+
+### APIs (10)
+
+- [Opentrons Python Protocol API](https://apis.io/apis/opentrons/opentrons-python-protocol-api/) — The Opentrons Python Protocol API is an open-source Python framework for writing automated biology lab protocols that run on Opentrons Flex and OT-2 robots.…
+- [Opentrons Attached Instruments API](https://apis.io/apis/opentrons/opentrons-attached-instruments-api/) — Query attached pipettes and grippers
+- [Opentrons Attached Modules API](https://apis.io/apis/opentrons/opentrons-attached-modules-api/) — Query attached hardware modules
+- [Opentrons Flex Deck Configuration API](https://apis.io/apis/opentrons/opentrons-flex-deck-configuration-api/) — Configure the Flex robot deck
+- [Opentrons Health API](https://apis.io/apis/opentrons/opentrons-health-api/) — Robot server health and status endpoints
+- [Opentrons Protocol Management API](https://apis.io/apis/opentrons/opentrons-protocol-management-api/) — Upload, manage, and analyze protocols
+- [Opentrons Robot API](https://apis.io/apis/opentrons/opentrons-robot-api/) — Robot-level control including estop and door status
+- [Opentrons Run Management API](https://apis.io/apis/opentrons/opentrons-run-management-api/) — Create and control protocol runs
+- [Opentrons Simple Commands API](https://apis.io/apis/opentrons/opentrons-simple-commands-api/) — Stateless atomic liquid handling commands
+- [Opentrons System Control API](https://apis.io/apis/opentrons/opentrons-system-control-api/) — System time and robot control
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Opentrons Agentic Access](https://apis.io/agentic-access/opentrons/opentrons-agentic-access/)
+
+#### JSON Schema (2)
+
+The data models the API reads and writes.
+
+- [Opentrons Command](https://apis.io/schemas/opentrons/opentrons-command/)
+- [Opentrons Run](https://apis.io/schemas/opentrons/opentrons-run/)
+
+#### Examples (2)
+
+Example requests and responses.
+
+- [Atomic Liquid Handling](https://apis.io/examples/opentrons/atomic-liquid-handling/)
+- [Create Run From Protocol](https://apis.io/examples/opentrons/create-run-from-protocol/)
+
+#### Collections (9)
+
+Postman and Open Collection request collections.
+
+- [Opentrons HTTP Attached Instruments API](https://apis.io/collections/opentrons/open-opentrons-attached-instruments-api/)
+- [Opentrons HTTP Attached Instruments Attached Modules API](https://apis.io/collections/opentrons/open-opentrons-attached-modules-api/)
+- [Opentrons HTTP Attached Instruments Flex Deck Configuration API](https://apis.io/collections/opentrons/open-opentrons-flex-deck-configuration-api/)
+- [Opentrons HTTP Attached Instruments Health API](https://apis.io/collections/opentrons/open-opentrons-health-api/)
+- [Opentrons HTTP Attached Instruments Protocol Management API](https://apis.io/collections/opentrons/open-opentrons-protocol-management-api/)
+- [Opentrons HTTP Attached Instruments Robot API](https://apis.io/collections/opentrons/open-opentrons-robot-api/)
+- [Opentrons HTTP Attached Instruments Run Management API](https://apis.io/collections/opentrons/open-opentrons-run-management-api/)
+- [Opentrons HTTP Attached Instruments Simple Commands API](https://apis.io/collections/opentrons/open-opentrons-simple-commands-api/)
+- [Opentrons HTTP Attached Instruments System Control API](https://apis.io/collections/opentrons/open-opentrons-system-control-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Opentrons — jsonschema rules](https://apis.io/rules/opentrons/opentrons-jsonschema-spectral-rules/)
+
+#### Security (1)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Opentrons Domain Security](https://apis.io/security/opentrons/opentrons-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Opentrons Plans Pricing](https://apis.io/plans/opentrons/opentrons-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Opentrons Rate Limits](https://apis.io/rate-limits/opentrons/opentrons-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Opentrons Finops](https://apis.io/finops/opentrons/opentrons-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://opentrons.com/)
 - [Documentation](https://docs.opentrons.com/)
-- [Python API V2 Documentation](https://docs.opentrons.com/v2/)
-- [HTTP API Integration Tools](https://github.com/Opentrons/opentrons-integration-tools/tree/main/http-api)
-- [GitHub Organization](https://github.com/opentrons)
-- [PyPI Package](https://pypi.org/project/opentrons/)
-- [Protocol Library](https://protocols.opentrons.com/)
-- [Labware Library](https://labware.opentrons.com/)
-- [Protocol Designer](https://designer.opentrons.com/)
+- [Getting started](https://opentrons.com/pythonapi)
 - [Support](https://support.opentrons.com/)
-- [News](https://opentrons.com/about/news)
-- [LinkedIn](https://www.linkedin.com/company/opentrons-labworks-inc.)
-- [X / Twitter](https://twitter.com/opentrons)
+- [GitHub](https://github.com/opentrons)
+
+## API Evangelist rating
+
+**Kin Score 31.2** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 67.0 |
+| Contract quality | 45.6 |
+| Contract governance | 9.8 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 7.9 |
+
+**Agent readiness 21.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 4.7** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/opentrons/](https://apis.io/providers/opentrons/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Opentrons: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/opentrons/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
